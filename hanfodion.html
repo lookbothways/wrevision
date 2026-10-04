@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hanfodion: the Welsh you need most</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#E9EEEC;--surface:#F8FAF9;--ink:#1C2B30;--muted:#55676C;--line:#C6D1CF;
+  --teal:#0E5C63;--on-teal:#F3FAF8;--mustard:#D49B12;--rasp:#A82E57;
+  --ok:#1C7550;--ok-bg:#D5EDE0;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#141C20;--surface:#1E292E;--ink:#E4ECEA;--muted:#93A4A8;--line:#34444A;
+    --teal:#58BDB8;--on-teal:#0C1D20;--mustard:#EBB93A;--rasp:#D95C86;
+    --ok:#6FD3A4;--ok-bg:#1D3B30;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141C20;--surface:#1E292E;--ink:#E4ECEA;--muted:#93A4A8;--line:#34444A;
+  --teal:#58BDB8;--on-teal:#0C1D20;--mustard:#EBB93A;--rasp:#D95C86;
+  --ok:#6FD3A4;--ok-bg:#1D3B30;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{height:100%;margin:0;background:var(--bg);color:var(--ink);
+  font:400 17px/1.45 "Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif}
+#app{min-height:100%;max-width:30rem;margin:0 auto;padding:22px 18px 26px;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--mustard);outline-offset:2px}
+h1{font-size:2.6rem;line-height:1;font-weight:800;letter-spacing:-.03em;margin:0}
+.lede{margin:.55rem 0 0;color:var(--muted);max-width:28ch}
+
+/* streak: a strip of woven blocks, one per day */
+.streak{margin:28px 0 22px}
+.weave{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.pick{display:grid;gap:6px;justify-items:center;font-size:.78rem;color:var(--muted)}
+.sw{width:100%;aspect-ratio:1;border-radius:4px;border:1.5px dashed var(--line)}
+.pick.today .sw{border:2px solid var(--ink)}
+.pick.today .dl{color:var(--ink);font-weight:700}
+.pick.done .sw{border:0;background:
+  repeating-linear-gradient(45deg,var(--teal) 0 5px,transparent 5px 10px),
+  repeating-linear-gradient(-45deg,var(--mustard) 0 5px,transparent 5px 10px),
+  var(--rasp)}
+.pick.fresh .sw{animation:weave .8s .25s cubic-bezier(.2,.7,.2,1) both}
+@keyframes weave{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
+.count{margin:14px 0 0;font-size:1.35rem;font-weight:700}
+.hint{margin:.15rem 0 0;color:var(--muted)}
+
+.go{display:block;width:100%;border:0;border-radius:14px;background:var(--teal);color:var(--on-teal);
+  font-weight:700;font-size:1.15rem;padding:18px 16px;min-height:60px}
+.go:active{transform:translateY(1px)}
+.quiet{display:block;width:100%;margin-top:10px;border:1.5px solid var(--line);border-radius:14px;
+  background:transparent;font-weight:600;padding:15px 16px}
+
+/* the list */
+.list{margin-top:34px}
+.list h2{font-size:1.35rem;font-weight:800;letter-spacing:-.01em;margin:0}
+.met{margin:.2rem 0 12px;color:var(--muted)}
+details{border-top:1.5px solid var(--line)}
+details:last-of-type{border-bottom:1.5px solid var(--line)}
+summary{list-style:none;display:flex;align-items:baseline;gap:10px;padding:14px 2px;font-weight:700;font-size:1.08rem;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+.num{flex:none;width:1.2em;color:var(--teal);font-weight:800}
+.tally{margin-left:auto;font-weight:500;font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.sub{margin:-4px 0 8px;padding-left:calc(1.2em + 12px);color:var(--muted);font-size:.95rem}
+details ul{list-style:none;margin:0;padding:0 0 12px}
+details li{display:grid;grid-template-columns:12px minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:baseline;padding:7px 2px}
+.mk{display:inline-block;width:11px;height:11px;border-radius:3px;border:1.5px solid var(--muted);align-self:center}
+.mk.m1{background:linear-gradient(90deg,var(--mustard) 50%,transparent 50%);border-color:var(--mustard)}
+.mk.m2{background:var(--teal);border-color:var(--teal)}
+.cy{font-weight:700}
+.en{color:var(--muted)}
+.key{margin:12px 0 0;font-size:.85rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px}
+.key span{display:inline-flex;align-items:center;gap:6px}
+footer{margin-top:auto;padding-top:28px;font-size:.85rem;color:var(--muted)}
+.link{background:none;border:0;padding:8px 0;color:var(--muted);text-decoration:underline;font-size:.85rem}
+
+/* practice */
+.bar{display:flex;align-items:center;gap:10px;margin:-8px -6px 0}
+.x{flex:none;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--muted);font-size:1.7rem;line-height:1}
+.prog{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-right:6px}
+.prog i{display:block;height:100%;background:var(--mustard);border-radius:4px;transition:width .3s ease}
+.stage{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:22px 0;min-height:9rem}
+.ask{margin:0 0 10px;color:var(--muted)}
+.word{margin:0;font-size:clamp(2.8rem,14vw,4.4rem);font-weight:800;line-height:1.02;letter-spacing:-.03em;overflow-wrap:anywhere}
+.word.long{font-size:clamp(1.9rem,8.5vw,2.8rem);letter-spacing:-.02em;line-height:1.1}
+.gloss{margin:14px 0 0;font-size:1.5rem;font-weight:600;color:var(--teal)}
+.note{margin:8px 0 0;color:var(--muted);max-width:30ch}
+.say{display:none;margin-top:14px;border:1.5px solid var(--line);border-radius:999px;background:transparent;padding:8px 16px;font-size:.95rem;font-weight:600}
+.has-voice .say{display:inline-block}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;min-height:58px;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);
+  background:var(--surface);font-size:1.15rem;font-weight:600}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-bg);border-color:var(--ok)}
+.opt.dim,.opt.miss{opacity:.4}
+.after{min-height:6.5rem;padding-top:14px}
+.after .note{max-width:none;margin-top:4px}
+.fb{margin:0;font-weight:700;font-size:1.1rem}
+.fb.ok{color:var(--ok)}
+.after .go{margin-top:12px}
+
+@media (prefers-reduced-motion:reduce){
+  .pick.fresh .sw{animation:none}
+  .prog i{transition:none}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+(function(){
+"use strict";
+
+/* The essentials, most useful first: [section, subtitle, [[Welsh, English, note]]] */
+var DATA=[
+["The engine","Present tense. Put any verb after one of these and you have a sentence.",[
+ ["Dw i'n…","I am / I do","Dw i'n gweithio = I'm working, I work."],
+ ["Dw i ddim yn…","I'm not / I don't","ddim slots in where the 'n was."],
+ ["Wyt ti'n…?","Do you…? (to a friend)","ti is for one person you know well."],
+ ["Dych chi'n…?","Do you…? (polite, or to several)","chi is for strangers and groups."],
+ ["Mae e'n…","He is","In the south it's e. Up north, o."],
+ ["Mae hi'n…","She is","Also 'it is' for the weather: Mae hi'n oer."],
+ ["'Dyn ni'n…","We are","ni = we, us."],
+ ["Maen nhw'n…","They are","nhw = they, them."]]],
+["The past","Three short verbs cover most of what you did.",[
+ ["Es i","I went","From mynd. Es i i'r dre = I went to town."],
+ ["Ces i","I had / I got","From cael. You'll often hear it as Ges i."],
+ ["Gwnes i","I did / I made","From gwneud. Add a verb for any past action: Gwnes i weithio."],
+ ["Est ti?","Did you go?","Answer with Do or Naddo."],
+ ["Beth wnest ti?","What did you do?","The g of gwnest drops off after beth."]]],
+["Yes and no","Welsh answers with the verb, so yes changes with the question.",[
+ ["Ydw","Yes, I am / I do","Answers Wyt ti…? and Dych chi…?"],
+ ["Nac ydw","No, I'm not / I don't",""],
+ ["Ydy","Yes, he or she is","Answers Ydy e…? and Ydy hi…?"],
+ ["Nac ydy","No, he or she isn't",""],
+ ["Do","Yes (about the past)","One word for everyone. Est ti? Do."],
+ ["Naddo","No (about the past)",""]]],
+["Wanting, having, asking","",[
+ ["Dw i'n moyn…","I want","moyn is the southern word. Elsewhere, eisiau."],
+ ["Mae … gyda fi","I have","Word for word: there is … with me."],
+ ["Gaf i…?","May I have…?","Gaf i baned? = May I have a cuppa?"],
+ ["Dw i'n hoffi…","I like","You'll hear lico in the south too."],
+ ["Dw i'n gorfod…","I have to",""]]],
+["Question words","",[
+ ["Beth?","What?",""],
+ ["Ble?","Where?",""],
+ ["Pwy?","Who?",""],
+ ["Sut?","How?","Said 'shwt' in the south, as in Shwmae."],
+ ["Pryd?","When?","pryd also means a meal. When's the meal?"]]],
+["Twelve verbs","",[
+ ["mynd","to go","Mynd a dod: going and coming."],
+ ["dod","to come",""],
+ ["gwneud","to do / to make",""],
+ ["cael","to have / to get","Where Ces i and Gaf i come from."],
+ ["hoffi","to like",""],
+ ["gweithio","to work","gwaith = work."],
+ ["byw","to live",""],
+ ["bwyta","to eat","bwyd = food."],
+ ["yfed","to drink",""],
+ ["gwylio","to watch","A cousin of 'vigil': keeping watch."],
+ ["prynu","to buy",""],
+ ["siarad","to speak","Said 'sharad'."]]],
+["When","",[
+ ["heddiw","today","he + dydd (day): this day."],
+ ["heno","tonight","he + nos (night): this night."],
+ ["yfory","tomorrow",""],
+ ["ddoe","yesterday",""],
+ ["neithiwr","last night",""],
+ ["nawr","now","Up north it's rŵan: nawr backwards."]]],
+["Glue","Small words that join the rest.",[
+ ["a","and","ac before a vowel."],
+ ["ond","but",""],
+ ["i","to","Dw i'n mynd i Aberteifi."],
+ ["o","from","Dw i'n dod o Gymru."],
+ ["yn","in","yn y tŷ = in the house."],
+ ["gyda","with",""],
+ ["iawn","very / OK","Da iawn = very good. Iawn? = OK?"]]]
+];
+
+var ALL=[];
+DATA.forEach(function(s,si){s[2].forEach(function(r,ii){ALL.push({id:si+"-"+ii,sec:si,cy:r[0],en:r[1],note:r[2]});});});
+
+var KEY="hanfodion-v1", INT=[0,1,1,3,7,14];
+var DAYS=["Su","Ll","Ma","Me","Ia","Gw","Sa"];
+var PRAISE=["Da iawn","Cywir","Gwych","Ardderchog","Perffaith"];
+var app=document.getElementById("app");
+
+/* ---------- saving ---------- */
+function blank(){return {items:{},streak:0,last:null,days:[],rev:0};}
+function loadLocal(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);if(o&&o.items)return o;}}catch(e){}return null;}
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+var S=loadLocal()||blank();
+if(!Array.isArray(S.days))S.days=[];
+
+var cloudDoc=null,pushT=null,pushing=false,dirty=false;
+function save(){S.rev=Date.now();saveLocal();pushSoon();}
+function pushSoon(){if(!cloudDoc)return;dirty=true;clearTimeout(pushT);pushT=setTimeout(push,1500);}
+function push(){
+  if(!cloudDoc||pushing||!dirty)return;
+  pushing=true;dirty=false;
+  cloudDoc.set({rev:S.rev,json:JSON.stringify(S)}).then(function(){pushing=false;if(dirty)pushSoon();},
+    function(e){pushing=false;if(!e||e.code!=="unavailable")cloudDoc=null;});
+}
+
+/* ---------- days and streak ---------- */
+function today(){var n=new Date();return Math.floor(Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())/864e5);}
+/* one missed day is forgiven; two in a row resets */
+function liveStreak(){return S.last!=null&&S.last>=today()-2?S.streak:0;}
+function strip(anim){
+  var t=today(),n=0,h="";
+  for(var d=t-6;d<=t;d++){
+    var done=S.days.indexOf(d)>-1;if(done)n++;
+    h+='<div class="pick'+(done?" done":"")+(d===t?" today":"")+(anim&&d===t?" fresh":"")+'"><span class="sw"></span><span class="dl">'+DAYS[new Date(d*864e5).getUTCDay()]+"</span></div>";
+  }
+  return '<div class="weave" role="img" aria-label="Practised on '+n+' of the last 7 days">'+h+"</div>";
+}
+function countLine(){var n=liveStreak();return n?'<p class="count">'+n+(n===1?" day":" days")+" in a row</p>":"";}
+
+/* ---------- speech (only where the device has a Welsh voice) ---------- */
+var voice=null;
+function loadVoice(){try{var v=speechSynthesis.getVoices();voice=null;for(var i=0;i<v.length;i++){if(/^cy/i.test(v[i].lang)){voice=v[i];break;}}document.body.classList.toggle("has-voice",!!voice);}catch(e){}}
+if("speechSynthesis" in window){loadVoice();try{speechSynthesis.addEventListener("voiceschanged",loadVoice);}catch(e){}}
+function say(t){if(!voice)return;try{var u=new SpeechSynthesisUtterance(t.replace(/…/g," "));u.voice=voice;u.lang=voice.lang;u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
+
+/* ---------- helpers ---------- */
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x;}return a;}
+function lvl(i){return S.items[i.id]?S.items[i.id].l:0;}
+function show(html){app.innerHTML=html;window.scrollTo(0,0);}
+function sizeClass(t){return t.length>11?" long":"";}
+
+/* ---------- home ---------- */
+var view="home";
+function home(){
+  view="home";clearTimeout(timer);
+  var t=today(),n=liveStreak(),doneToday=S.last===t,met=Object.keys(S.items).length;
+  var hint=doneToday?"Done for today. Come back tomorrow."
+    :n?"Do today's 3 minutes to keep it going."
+    :met?"Do today's 3 minutes to start a new streak."
+    :"Three minutes a day. Tap the right answer. That's all.";
+  var h='<header><h1 lang="cy">Hanfodion</h1><p class="lede">The Welsh you need most, in the order you need it.</p></header>'
+    +'<section class="streak">'+strip(false)+countLine()+'<p class="hint">'+hint+"</p></section>"
+    +'<button class="go" data-act="start">'+(doneToday?"Do another round":"Start today's 3 minutes")+"</button>"
+    +'<section class="list"><h2>The list</h2><p class="met">'+(met?"You've met "+met+" of "+ALL.length+".":ALL.length+" things, most useful first.")+"</p>";
+  DATA.forEach(function(s,si){
+    var rows="",k=0;
+    ALL.forEach(function(i){
+      if(i.sec!==si)return;
+      var st=S.items[i.id],m=!st?0:st.l>=4?2:1;if(st)k++;
+      rows+='<li><span class="mk m'+m+'" aria-hidden="true"></span><span class="cy" lang="cy">'+i.cy+'</span><span class="en">'+i.en+"</span></li>";
+    });
+    h+="<details"+(si===0?" open":"")+'><summary><span class="num">'+(si+1)+"</span>"+s[0]+'<span class="tally">'+k+"/"+s[2].length+"</span></summary>"
+      +(s[1]?'<p class="sub">'+s[1]+"</p>":"")+"<ul>"+rows+"</ul></details>";
+  });
+  h+='<p class="key"><span><i class="mk"></i>not met yet</span><span><i class="mk m1"></i>learning</span><span><i class="mk m2"></i>sticking</span></p></section>'
+    +'<footer>Your progress saves automatically. Miss one day and the streak survives; miss two and it starts again.<br><button class="link" data-act="reset">Reset my progress</button></footer>';
+  show(h);
+}
+
+/* ---------- a 3-minute session ---------- */
+var Q=[],pos=0,cur=null,timer=null,stats=null,requeued=null,praise=0;
+
+function buildSession(){
+  var t=today();
+  var seen=ALL.filter(function(i){return S.items[i.id];});
+  var due=seen.filter(function(i){return S.items[i.id].d<=t;})
+    .sort(function(a,b){return lvl(a)-lvl(b)||S.items[a.id].d-S.items[b.id].d;}).slice(0,9);
+  var fresh=ALL.filter(function(i){return !S.items[i.id];}).slice(0,seen.length===0?6:due.length>=6?2:4);
+  var need=10-due.length-fresh.length*2,extra=[];
+  if(need>0)extra=shuffle(seen.filter(function(i){return due.indexOf(i)<0;})).sort(function(a,b){return lvl(a)-lvl(b);}).slice(0,need);
+  var rev=shuffle(due.concat(extra)),q=[],r=0;
+  fresh.forEach(function(i){
+    q.push({k:"intro",i:i},{k:"q",i:i});
+    for(var n=0;n<2&&r<rev.length;n++)q.push({k:"q",i:rev[r++]});
+  });
+  while(r<rev.length)q.push({k:"q",i:rev[r++]});
+  shuffle(fresh).forEach(function(i){q.push({k:"q",i:i});});
+  return q;
+}
+function start(){Q=buildSession();pos=0;stats={right:0,met:0};requeued={};step();}
+function step(){
+  clearTimeout(timer);
+  if(pos>=Q.length)return finish();
+  var e=Q[pos];
+  if(e.k==="intro")intro(e.i);else ask(e.i);
+}
+function next(){clearTimeout(timer);pos++;step();}
+function bar(){return '<div class="bar"><button class="x" data-act="home" aria-label="Stop and go back">×</button><div class="prog" role="progressbar" aria-label="Session progress" aria-valuemin="0" aria-valuemax="'+Q.length+'" aria-valuenow="'+pos+'"><i style="width:'+Math.round(pos/Q.length*100)+'%"></i></div></div>';}
+
+function intro(i){
+  view="intro";cur={item:i,sayText:i.cy};
+  show(bar()+'<div class="stage"><p class="ask">New one</p><p class="word'+sizeClass(i.cy)+'" lang="cy">'+i.cy+'</p>'
+    +'<p class="gloss">'+i.en+"</p>"+(i.note?'<p class="note">'+i.note+"</p>":"")
+    +'<button class="say" data-act="say">Hear it</button></div>'
+    +'<button class="go" data-act="met">Got it</button>');
+}
+
+function distractors(item,n){
+  var same=shuffle(ALL.filter(function(o){return o.sec===item.sec&&o!==item;}));
+  var rest=shuffle(ALL.filter(function(o){return o.sec!==item.sec;}));
+  var out=[];
+  same.concat(rest).some(function(o){
+    if(o.en!==item.en&&o.cy!==item.cy&&!out.some(function(x){return x.en===o.en||x.cy===o.cy;}))out.push(o);
+    return out.length>=n;
+  });
+  return out;
+}
+
+/* Starts as a choice of two, Welsh to English; grows to four, then English to Welsh. */
+function ask(i){
+  view="ask";
+  if(!S.items[i.id])S.items[i.id]={l:0,d:today()};
+  var l=S.items[i.id].l,rev=l>=3,n=l===0?2:l===1?3:4;
+  var opts=shuffle([i].concat(distractors(i,n-1)));
+  cur={item:i,opts:opts,rev:rev,answered:false,sayText:i.cy};
+  var prompt=rev?i.en:i.cy;
+  var h=bar()+'<div class="stage"><p class="ask">'+(rev?"How do you say this in Welsh?":"What does this mean?")+"</p>"
+    +'<p class="word'+sizeClass(prompt)+'"'+(rev?"":' lang="cy"')+">"+prompt+"</p>"
+    +(rev?"":'<button class="say" data-act="say">Hear it</button>')+"</div>"
+    +'<div class="opts">';
+  opts.forEach(function(o,k){h+='<button class="opt" data-o="'+k+'"'+(rev?' lang="cy"':"")+">"+(rev?o.cy:o.en)+"</button>";});
+  h+='</div><div class="after" aria-live="polite"></div>';
+  show(h);
+}
+
+function answer(k){
+  if(!cur||cur.answered||view!=="ask")return;
+  cur.answered=true;
+  var it=cur.item,ok=cur.opts[k]===it,st=S.items[it.id],t=today(),again=false;
+  if(ok){st.l=Math.min(5,st.l+1);st.d=t+INT[st.l];stats.right++;}
+  else{
+    st.l=Math.max(0,st.l-1);st.d=t;
+    if(!requeued[it.id]){requeued[it.id]=1;again=true;Q.splice(Math.min(Q.length,pos+3),0,{k:"q",i:it});}
+  }
+  save();
+  var btns=app.querySelectorAll(".opt");
+  for(var b=0;b<btns.length;b++){
+    btns[b].disabled=true;
+    btns[b].classList.add(cur.opts[b]===it?"right":b===k?"miss":"dim");
+  }
+  var after=app.querySelector(".after"),note=it.note?'<p class="note">'+it.note+"</p>":"";
+  if(ok){
+    after.innerHTML='<p class="fb ok" lang="cy">'+PRAISE[praise++%PRAISE.length]+"</p>"+note;
+    timer=setTimeout(next,it.note?2100:1000);
+  }else{
+    after.innerHTML='<p class="fb"><span lang="cy">'+it.cy+"</span> = "+it.en+"</p>"+note
+      +(again?'<p class="note">It comes round again in a moment.</p>':"")
+      +'<button class="go" data-act="next">Next</button>';
+    var nb=after.querySelector(".go");
+    try{nb.focus({preventScroll:true});nb.scrollIntoView({block:"nearest"});}catch(e){}
+  }
+}
+
+function finish(){
+  view="done";
+  var t=today(),counted=false;
+  if(S.last!==t){
+    S.streak=(S.last!=null&&S.last>=t-2)?S.streak+1:1;
+    S.last=t;counted=true;
+    if(S.days.indexOf(t)<0)S.days.push(t);
+    S.days=S.days.filter(function(d){return d>t-30;});
+  }
+  save();clearTimeout(pushT);dirty=!!cloudDoc;push();
+  var sum="You got "+stats.right+" right"+(stats.met?" and met "+stats.met+" new "+(stats.met===1?"one":"ones"):"")+".";
+  show('<header><h1 lang="cy">Wedi gorffen</h1><p class="lede">Finished. '+sum+"</p></header>"
+    +'<section class="streak">'+strip(counted)+countLine()
+    +'<p class="hint">'+(counted?"That's today done. Come back tomorrow.":"Extra round done. Your streak is safe.")+"</p></section>"
+    +'<button class="go" data-act="home">Back to the list</button>'
+    +'<button class="quiet" data-act="start">Do another round</button>');
+}
+
+/* ---------- events ---------- */
+app.addEventListener("click",function(e){
+  var o=e.target.closest("[data-o]");
+  if(o){answer(+o.getAttribute("data-o"));return;}
+  var a=e.target.closest("[data-act]");
+  if(!a)return;
+  switch(a.getAttribute("data-act")){
+    case "start":start();break;
+    case "home":home();break;
+    case "next":next();break;
+    case "say":if(cur)say(cur.sayText);break;
+    case "met":
+      if(cur&&!S.items[cur.item.id]){S.items[cur.item.id]={l:0,d:today()};stats.met++;save();}
+      next();break;
+    case "reset":
+      if(confirm("Clear your streak and everything you've met?")){S=blank();save();home();}
+      break;
+  }
+});
+document.addEventListener("keydown",function(e){
+  if(view!=="ask"||!cur||cur.answered)return;
+  var n=+e.key;
+  if(n>=1&&n<=cur.opts.length)answer(n-1);
+});
+
+home();
+
+/* When opened as a Claude artifact, also keep progress with the account so it survives a cleared browser. */
+(function(){
+  if(!window.claude||typeof window.claude.use!=="function")return;
+  Promise.all([window.claude.use("db"),window.claude.use("user")]).then(function(r){
+    var db=r[0],user=r[1];
+    if(!db||!user)return;
+    return user.id().then(function(uid){
+      if(!uid)return;
+      var ref=db.doc("data/users/"+uid+"/hanfodion");
+      return ref.get().then(function(snap){
+        cloudDoc=ref;
+        var d=snap.exists?snap.data():null,crev=d&&typeof d.rev==="number"?d.rev:0;
+        if(d&&typeof d.json==="string"&&crev>(S.rev||0)){
+          if(view!=="home"){pushSoon();return;}
+          try{var c=JSON.parse(d.json);if(c&&c.items){S=c;if(!Array.isArray(S.days))S.days=[];saveLocal();home();}}catch(e){}
+        }else if((S.rev||0)>crev){pushSoon();}
+      });
+    });
+  }).catch(function(){});
+})();
+
+})();
+</script>
+</body>
+</html>
