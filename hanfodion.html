@@ -1,122 +1,122 @@
 <!doctype html>
-<html lang="en">
+<html lang="cy">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Hanfodion: the Welsh you need most</title>
+<title>hanfodion — wrevision</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box}
 :root{
-  --bg:#E9EEEC;--surface:#F8FAF9;--ink:#1C2B30;--muted:#55676C;--line:#C6D1CF;
-  --teal:#0E5C63;--on-teal:#F3FAF8;--mustard:#D49B12;--rasp:#A82E57;
-  --ok:#1C7550;--ok-bg:#D5EDE0;
-  box-sizing:border-box;
+  --ink:#1a1a1a;--mid:#6b6b6b;--line:#e4e4e4;--paper:#ffffff;--tint:#f7f7f7;
+  --red:#c8102e;--green:#1f8a4c;--green-tint:#eaf6ef;--radius:10px;
+  color-scheme:light;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#141C20;--surface:#1E292E;--ink:#E4ECEA;--muted:#93A4A8;--line:#34444A;
-    --teal:#58BDB8;--on-teal:#0C1D20;--mustard:#EBB93A;--rasp:#D95C86;
-    --ok:#6FD3A4;--ok-bg:#1D3B30;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#141C20;--surface:#1E292E;--ink:#E4ECEA;--muted:#93A4A8;--line:#34444A;
-  --teal:#58BDB8;--on-teal:#0C1D20;--mustard:#EBB93A;--rasp:#D95C86;
-  --ok:#6FD3A4;--ok-bg:#1D3B30;
-}
-html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
-body{height:100%;margin:0;background:var(--bg);color:var(--ink);
-  font:400 17px/1.45 "Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif}
-#app{min-height:100%;max-width:30rem;margin:0 auto;padding:22px 18px 26px;display:flex;flex-direction:column}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{height:100%;margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Roboto',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight:400;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+#app{min-height:100%;max-width:720px;margin:0 auto;padding:28px 20px 40px;display:flex;flex-direction:column}
 button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
-:focus-visible{outline:3px solid var(--mustard);outline-offset:2px}
-h1{font-size:2.6rem;line-height:1;font-weight:800;letter-spacing:-.03em;margin:0}
-.lede{margin:.55rem 0 0;color:var(--muted);max-width:28ch}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
 
-/* streak: a strip of woven blocks, one per day */
-.streak{margin:28px 0 22px}
-.weave{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
-.pick{display:grid;gap:6px;justify-items:center;font-size:.78rem;color:var(--muted)}
-.sw{width:100%;aspect-ratio:1;border-radius:4px;border:1.5px dashed var(--line)}
+.back{align-self:flex-start;font-size:14px;color:var(--mid);text-decoration:none;
+  border:1px solid var(--line);border-radius:8px;padding:7px 12px;margin-bottom:14px}
+.back:hover{background:var(--tint)}
+header{text-align:center;margin-bottom:22px}
+h1{font-size:30px;font-weight:700;letter-spacing:-.5px;margin:0 0 4px}
+h1 .mark{color:var(--red)}
+.lede{font-size:14px;color:var(--mid);font-weight:300;margin:0}
+
+/* streak: one block per day */
+.streak{border:1px solid var(--line);border-radius:var(--radius);padding:18px 16px;margin-bottom:14px;text-align:center}
+.weave{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;max-width:420px;margin:0 auto}
+.pick{display:grid;gap:6px;justify-items:center;font-size:12px;color:var(--mid)}
+.sw{width:100%;aspect-ratio:1;border-radius:8px;border:1px dashed #cfcfcf}
 .pick.today .sw{border:2px solid var(--ink)}
 .pick.today .dl{color:var(--ink);font-weight:700}
-.pick.done .sw{border:0;background:
-  repeating-linear-gradient(45deg,var(--teal) 0 5px,transparent 5px 10px),
-  repeating-linear-gradient(-45deg,var(--mustard) 0 5px,transparent 5px 10px),
-  var(--rasp)}
-.pick.fresh .sw{animation:weave .8s .25s cubic-bezier(.2,.7,.2,1) both}
-@keyframes weave{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
-.count{margin:14px 0 0;font-size:1.35rem;font-weight:700}
-.hint{margin:.15rem 0 0;color:var(--muted)}
+.pick.done .sw{border:0;background:var(--red)}
+.pick.fresh .sw{animation:fill .7s .25s cubic-bezier(.2,.7,.2,1) both}
+@keyframes fill{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
+.count{margin:14px 0 0;font-size:18px;font-weight:700}
+.hint{margin:4px 0 0;color:var(--mid);font-size:14px}
 
-.go{display:block;width:100%;border:0;border-radius:14px;background:var(--teal);color:var(--on-teal);
-  font-weight:700;font-size:1.15rem;padding:18px 16px;min-height:60px}
+.go{display:block;width:100%;border:1px solid var(--ink);border-radius:8px;background:var(--ink);color:#fff;
+  font-weight:500;font-size:16px;padding:15px 16px;min-height:54px}
 .go:active{transform:translateY(1px)}
-.quiet{display:block;width:100%;margin-top:10px;border:1.5px solid var(--line);border-radius:14px;
-  background:transparent;font-weight:600;padding:15px 16px}
+.quiet{display:block;width:100%;margin-top:10px;border:1px solid var(--line);border-radius:8px;
+  background:var(--paper);font-weight:500;font-size:14px;padding:13px 16px;min-height:48px}
+.quiet:hover{background:var(--tint)}
 
 /* the list */
-.list{margin-top:34px}
-.list h2{font-size:1.35rem;font-weight:800;letter-spacing:-.01em;margin:0}
-.met{margin:.2rem 0 12px;color:var(--muted)}
-details{border-top:1.5px solid var(--line)}
-details:last-of-type{border-bottom:1.5px solid var(--line)}
-summary{list-style:none;display:flex;align-items:baseline;gap:10px;padding:14px 2px;font-weight:700;font-size:1.08rem;cursor:pointer}
-summary::-webkit-details-marker{display:none}
-.num{flex:none;width:1.2em;color:var(--teal);font-weight:800}
-.tally{margin-left:auto;font-weight:500;font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
-.sub{margin:-4px 0 8px;padding-left:calc(1.2em + 12px);color:var(--muted);font-size:.95rem}
-details ul{list-style:none;margin:0;padding:0 0 12px}
-details li{display:grid;grid-template-columns:12px minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:baseline;padding:7px 2px}
-.mk{display:inline-block;width:11px;height:11px;border-radius:3px;border:1.5px solid var(--muted);align-self:center}
-.mk.m1{background:linear-gradient(90deg,var(--mustard) 50%,transparent 50%);border-color:var(--mustard)}
-.mk.m2{background:var(--teal);border-color:var(--teal)}
-.cy{font-weight:700}
-.en{color:var(--muted)}
-.key{margin:12px 0 0;font-size:.85rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px}
+.list{margin-top:28px}
+.list h2{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;font-weight:500;color:var(--red);margin:0}
+.met{margin:4px 0 14px;color:var(--mid);font-size:14px;font-weight:300}
+.unit{border:1px solid var(--line);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
+.unit summary{list-style:none;display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;font-weight:500;background:var(--paper)}
+.unit summary::-webkit-details-marker{display:none}
+.unit[open] summary{border-bottom:1px solid var(--line)}
+.unit-pill,.badge{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;font-weight:500;color:var(--red);
+  border:1px solid var(--line);border-radius:999px;padding:5px 10px;white-space:nowrap}
+.unit-title{flex:1;font-size:16px}
+.tally{font-weight:400;font-size:13px;color:var(--mid);font-variant-numeric:tabular-nums}
+.chev{color:var(--mid);transition:transform .2s ease;font-size:18px}
+.unit[open] .chev{transform:rotate(90deg)}
+.unit-body{padding:18px;background:var(--tint)}
+.sub{margin:0 0 12px;color:var(--mid);font-size:13px;font-style:italic}
+.unit ul{list-style:none;margin:0;padding:6px 16px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius)}
+.unit li{display:grid;grid-template-columns:12px minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:baseline;padding:10px 0;border-top:1px dashed var(--line)}
+.unit li:first-child{border-top:0}
+.mk{display:inline-block;width:11px;height:11px;border-radius:3px;border:1px solid #bdbdbd;align-self:center}
+.mk.m1{background:linear-gradient(90deg,var(--red) 50%,transparent 50%);border-color:var(--red)}
+.mk.m2{background:var(--green);border-color:var(--green)}
+.cy{font-weight:500}
+.en{color:var(--mid);font-size:14px}
+.key{margin:0;font-size:12px;color:var(--mid);display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px}
 .key span{display:inline-flex;align-items:center;gap:6px}
-footer{margin-top:auto;padding-top:28px;font-size:.85rem;color:var(--muted)}
-.link{background:none;border:0;padding:8px 0;color:var(--muted);text-decoration:underline;font-size:.85rem}
+footer{margin-top:auto;padding-top:22px;text-align:center;font-size:12px;color:var(--mid);font-weight:300}
+.link{background:none;border:0;padding:8px 0;color:var(--mid);text-decoration:underline;font-size:12px;font-weight:300}
 
 /* practice */
-.bar{display:flex;align-items:center;gap:10px;margin:-8px -6px 0}
-.x{flex:none;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--muted);font-size:1.7rem;line-height:1}
-.prog{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-right:6px}
-.prog i{display:block;height:100%;background:var(--mustard);border-radius:4px;transition:width .3s ease}
+.bar{display:flex;align-items:center;gap:10px;margin:-10px -8px 0}
+.x{flex:none;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--mid);font-size:26px;line-height:1}
+.prog{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-right:8px}
+.prog i{display:block;height:100%;background:var(--red);border-radius:3px;transition:width .3s ease}
 .stage{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:22px 0;min-height:9rem}
-.ask{margin:0 0 10px;color:var(--muted)}
-.word{margin:0;font-size:clamp(2.8rem,14vw,4.4rem);font-weight:800;line-height:1.02;letter-spacing:-.03em;overflow-wrap:anywhere}
-.word.long{font-size:clamp(1.9rem,8.5vw,2.8rem);letter-spacing:-.02em;line-height:1.1}
-.gloss{margin:14px 0 0;font-size:1.5rem;font-weight:600;color:var(--teal)}
-.note{margin:8px 0 0;color:var(--muted);max-width:30ch}
-.say{display:none;margin-top:14px;border:1.5px solid var(--line);border-radius:999px;background:transparent;padding:8px 16px;font-size:.95rem;font-weight:600}
+.ask{margin:0 0 14px;color:var(--mid);font-size:14px}
+.ask.badge{color:var(--red)}
+.word{margin:0;font-size:clamp(40px,13vw,64px);font-weight:700;line-height:1.05;letter-spacing:-1px;overflow-wrap:anywhere}
+.word.long{font-size:clamp(28px,8.5vw,42px);letter-spacing:-.5px;line-height:1.12}
+.gloss{margin:14px 0 0;font-size:22px;font-weight:500;color:var(--green)}
+.note{margin:8px 0 0;color:var(--mid);font-size:13px;font-style:italic;max-width:34ch}
+.say{display:none;margin-top:14px;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:7px 12px;font-size:14px}
 .has-voice .say{display:inline-block}
 .opts{display:grid;gap:10px}
-.opt{text-align:left;min-height:58px;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);
-  background:var(--surface);font-size:1.15rem;font-weight:600}
+.opt{text-align:left;min-height:56px;padding:14px 16px;border-radius:var(--radius);border:1px solid var(--line);
+  background:var(--paper);font-size:16px;font-weight:500}
+.opt:hover:not(:disabled){background:var(--tint)}
 .opt:disabled{cursor:default}
-.opt.right{background:var(--ok-bg);border-color:var(--ok)}
+.opt.right{background:var(--green-tint);border-color:var(--green);color:var(--green)}
 .opt.dim,.opt.miss{opacity:.4}
 .after{min-height:6.5rem;padding-top:14px}
 .after .note{max-width:none;margin-top:4px}
-.fb{margin:0;font-weight:700;font-size:1.1rem}
-.fb.ok{color:var(--ok)}
+.fb{margin:0;font-weight:500;font-size:15px}
+.fb.ok{color:var(--green)}
 .after .go{margin-top:12px}
-.idk{margin-top:0;color:var(--muted)}
+.idk{margin-top:0;color:var(--mid)}
 
 @media (prefers-reduced-motion:reduce){
   .pick.fresh .sw{animation:none}
-  .prog i{transition:none}
+  .prog i,.chev{transition:none}
 }
 </style>
 </head>
 <body>
-<div id="app"></div>
+<div id="app" lang="en"></div>
 <script>
 (function(){
 "use strict";
@@ -247,7 +247,7 @@ function home(){
     :n?"Do today's 3 minutes to keep it going."
     :met?"Do today's 3 minutes to start a new streak."
     :"Three minutes a day. Tap the right answer. That's all.";
-  var h='<header><h1 lang="cy">Hanfodion</h1><p class="lede">The Welsh you need most, in the order you need it.</p></header>'
+  var h='<a class="back" href="index.html">‹ wrevision</a><header><h1 lang="cy"><span class="mark">h</span>anfodion</h1><p class="lede">The Welsh you need most · 3 minutes a day · De Cymru</p></header>'
     +'<section class="streak">'+strip(false)+countLine()+'<p class="hint">'+hint+"</p></section>"
     +'<button class="go" data-act="start">'+(doneToday?"Do another round":"Start today's 3 minutes")+"</button>"
     +'<section class="list"><h2>The list</h2><p class="met">'+(met?"You've met "+met+" of "+ALL.length+".":ALL.length+" things, most useful first.")+"</p>";
@@ -258,8 +258,8 @@ function home(){
       var st=S.items[i.id],m=!st?0:st.l>=4?2:1;if(st)k++;
       rows+='<li><span class="mk m'+m+'" aria-hidden="true"></span><span class="cy" lang="cy">'+i.cy+'</span><span class="en">'+i.en+"</span></li>";
     });
-    h+="<details"+(si===0?" open":"")+'><summary><span class="num">'+(si+1)+"</span>"+s[0]+'<span class="tally">'+k+"/"+s[2].length+"</span></summary>"
-      +(s[1]?'<p class="sub">'+s[1]+"</p>":"")+"<ul>"+rows+"</ul></details>";
+    h+='<details class="unit"'+(si===0?" open":"")+'><summary><span class="unit-pill" lang="cy">Rhan '+(si+1)+'</span><span class="unit-title">'+s[0]+'</span><span class="tally">'+k+"/"+s[2].length+'</span><span class="chev">›</span></summary>'
+      +'<div class="unit-body">'+(s[1]?'<p class="sub">'+s[1]+"</p>":"")+"<ul>"+rows+"</ul></div></details>";
   });
   h+='<p class="key"><span><i class="mk"></i>not met yet</span><span><i class="mk m1"></i>learning</span><span><i class="mk m2"></i>sticking</span></p></section>'
     +'<footer>Your progress saves automatically. Miss one day and the streak survives; miss two and it starts again.<br><button class="link" data-act="reset">Reset my progress</button></footer>';
@@ -298,7 +298,7 @@ function bar(){return '<div class="bar"><button class="x" data-act="home" aria-l
 
 function intro(i){
   view="intro";cur={item:i,sayText:i.cy};
-  show(bar()+'<div class="stage"><p class="ask">New one</p><p class="word'+sizeClass(i.cy)+'" lang="cy">'+i.cy+'</p>'
+  show(bar()+'<div class="stage"><p class="ask badge" lang="cy">Gair newydd</p><p class="word'+sizeClass(i.cy)+'" lang="cy">'+i.cy+'</p>'
     +'<p class="gloss">'+i.en+"</p>"+(i.note?'<p class="note">'+i.note+"</p>":"")
     +'<button class="say" data-act="say">Hear it</button></div>'
     +'<button class="go" data-act="met">Got it</button>');
@@ -343,7 +343,7 @@ function ask(i){
   var opts=shuffle([i].concat(distractors(i,n-1)));
   cur={item:i,opts:opts,rev:rev,answered:false,sayText:i.cy};
   var prompt=rev?i.en:i.cy;
-  var h=bar()+'<div class="stage"><p class="ask">'+(rev?"How do you say this in Welsh?":"What does this mean?")+"</p>"
+  var h=bar()+'<div class="stage"><p class="ask badge" lang="cy">'+(rev?"Saesneg i Gymraeg":"Cymraeg i Saesneg")+"</p>"
     +'<p class="word'+sizeClass(prompt)+'"'+(rev?"":' lang="cy"')+">"+prompt+"</p>"
     +(rev?"":'<button class="say" data-act="say">Hear it</button>')+"</div>"
     +'<div class="opts">';
@@ -391,7 +391,7 @@ function finish(){
   }
   save();clearTimeout(pushT);dirty=!!cloudDoc;push();
   var sum="You got "+stats.right+" right"+(stats.met?" and met "+stats.met+" new "+(stats.met===1?"one":"ones"):"")+".";
-  show('<header><h1 lang="cy">Wedi gorffen</h1><p class="lede">Finished. '+sum+"</p></header>"
+  show('<header><h1 lang="cy"><span class="mark">W</span>edi gorffen</h1><p class="lede">Finished. '+sum+"</p></header>"
     +'<section class="streak">'+strip(counted)+countLine()
     +'<p class="hint">'+(counted?"That's today done. Come back tomorrow.":"Extra round done. Your streak is safe.")+"</p></section>"
     +'<button class="go" data-act="home">Back to the list</button>'

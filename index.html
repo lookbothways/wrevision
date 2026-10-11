@@ -140,6 +140,15 @@
   .help-box strong { font-weight: 500; }
   .help-box em { color: var(--mid); font-style: italic; }
 
+  a.unit.hanfodion-link {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 18px; margin-bottom: 24px;
+    color: var(--ink); text-decoration: none; font-weight: 500;
+  }
+  a.unit.hanfodion-link:hover { background: var(--tint); }
+  a.unit.hanfodion-link:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+  .hanfodion-link .unit-sub { display: block; font-size: 13px; font-weight: 300; color: var(--mid); margin-top: 2px; }
+
   .footnote {
     margin-top: 22px; text-align: center; font-size: 12px;
     color: var(--mid); font-weight: 300;
@@ -153,6 +162,12 @@
     <h1><span class="mark">w</span>revision</h1>
     <p class="tagline">Mynediad · Unedau 1–10 · De Cymru</p>
   </header>
+
+  <a class="unit hanfodion-link" href="hanfodion.html">
+    <span class="unit-pill">Hanfodion</span>
+    <span class="unit-title">Y pethau pwysicaf 🧶<span class="unit-sub">The Welsh you need most · 3 minutes a day</span></span>
+    <span class="chev">›</span>
+  </a>
 
   <div class="toolbar">
     <select id="unitJump" onchange="jumpTo(this.value)">
