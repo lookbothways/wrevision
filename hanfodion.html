@@ -107,6 +107,7 @@ footer{margin-top:auto;padding-top:28px;font-size:.85rem;color:var(--muted)}
 .fb{margin:0;font-weight:700;font-size:1.1rem}
 .fb.ok{color:var(--ok)}
 .after .go{margin-top:12px}
+.idk{margin-top:0;color:var(--muted)}
 
 @media (prefers-reduced-motion:reduce){
   .pick.fresh .sw{animation:none}
@@ -303,6 +304,26 @@ function intro(i){
     +'<button class="go" data-act="met">Got it</button>');
 }
 
+/* "I have no idea": no guessing, no penalty screen. Show the word, then bring it back twice as an easy one. */
+function teach(){
+  if(!cur||cur.answered||view!=="ask")return;
+  cur.answered=true;
+  var i=cur.item,st=S.items[i.id],c=requeued[i.id]||0,soon=false;
+  st.l=0;st.d=today();save();
+  if(c<2){
+    var at=Math.min(Q.length,pos+3);
+    Q.splice(at,0,{k:"q",i:i});soon=true;
+    if(c===0&&Q.length-at>3)Q.push({k:"q",i:i});
+    requeued[i.id]=c+1;
+  }
+  view="teach";cur={item:i,sayText:i.cy};
+  show(bar()+'<div class="stage"><p class="ask">No problem. Here it is.</p><p class="word'+sizeClass(i.cy)+'" lang="cy">'+i.cy+'</p>'
+    +'<p class="gloss">'+i.en+"</p>"+(i.note?'<p class="note">'+i.note+"</p>":"")
+    +'<button class="say" data-act="say">Hear it</button>'
+    +'<p class="note">Say it out loud once'+(soon?". It comes back in a moment as an easy one.":".")+"</p></div>"
+    +'<button class="go" data-act="met">Got it</button>');
+}
+
 function distractors(item,n){
   var same=shuffle(ALL.filter(function(o){return o.sec===item.sec&&o!==item;}));
   var rest=shuffle(ALL.filter(function(o){return o.sec!==item.sec;}));
@@ -327,7 +348,7 @@ function ask(i){
     +(rev?"":'<button class="say" data-act="say">Hear it</button>')+"</div>"
     +'<div class="opts">';
   opts.forEach(function(o,k){h+='<button class="opt" data-o="'+k+'"'+(rev?' lang="cy"':"")+">"+(rev?o.cy:o.en)+"</button>";});
-  h+='</div><div class="after" aria-live="polite"></div>';
+  h+='</div><div class="after" aria-live="polite"><button class="quiet idk" data-act="idk">I have no idea</button></div>';
   show(h);
 }
 
@@ -387,6 +408,7 @@ app.addEventListener("click",function(e){
     case "start":start();break;
     case "home":home();break;
     case "next":next();break;
+    case "idk":teach();break;
     case "say":if(cur)say(cur.sayText);break;
     case "met":
       if(cur&&!S.items[cur.item.id]){S.items[cur.item.id]={l:0,d:today()};stats.met++;save();}
