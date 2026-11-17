@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="cy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>amser — wrevision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --ink:#1a1a1a;--mid:#6b6b6b;--line:#e4e4e4;--paper:#ffffff;--tint:#f7f7f7;
+  --red:#c8102e;--green:#1f8a4c;--green-tint:#eaf6ef;--radius:10px;
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{height:100%;margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Roboto',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight:400;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+#app{min-height:100%;max-width:720px;margin:0 auto;padding:28px 20px 40px;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+.back{align-self:flex-start;font-size:14px;color:var(--mid);text-decoration:none;
+  border:1px solid var(--line);border-radius:8px;padding:7px 12px;margin-bottom:14px}
+.back:hover{background:var(--tint)}
+header{text-align:center;margin-bottom:18px}
+h1{font-size:30px;font-weight:700;letter-spacing:-.5px;margin:0 0 4px}
+h1 .mark{color:var(--red)}
+.lede{font-size:14px;color:var(--mid);font-weight:300;margin:0}
+
+/* switches */
+.switch{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;font-weight:500;user-select:none;-webkit-user-select:none;padding:6px 0;white-space:nowrap}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.track{position:relative;width:42px;height:24px;border-radius:999px;background:var(--line);transition:background .2s ease;flex:none}
+.track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;
+  box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .2s ease}
+.switch input:checked+.track{background:var(--red)}
+.switch input:checked+.track::after{transform:translateX(18px)}
+.switch input:focus-visible+.track{outline:2px solid var(--red);outline-offset:2px}
+.switch .en{color:var(--mid);font-weight:300}
+
+/* clock */
+.clock{display:block;width:min(340px,82vw);height:auto;margin:0 auto;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.clock:focus{outline:none}
+.clock:focus-visible .rim{stroke:var(--red)}
+.hand{cursor:grab;touch-action:none}
+.dragging .hand,.dragging{cursor:grabbing}
+.hit{stroke:transparent;stroke-width:34;stroke-linecap:round}
+.num-face{font-family:'Roboto',sans-serif;font-weight:500;font-size:22px;fill:var(--ink)}
+
+/* the time, written out */
+.read{margin:22px 0 0;text-align:center;font-size:21px;line-height:1.7;font-weight:400;color:var(--ink);min-height:2.4em}
+.read .num{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.read .mut{color:var(--red)}
+.read .sep{color:var(--mid);font-weight:300;margin:0 .45em}
+.blank{font:inherit;color:var(--ink);background:var(--tint);border:0;border-bottom:2px solid var(--ink);border-radius:4px 4px 0 0;
+  padding:0 4px;margin:0 1px;text-align:center;min-width:2.2ch;height:1.45em;vertical-align:baseline}
+.blank:focus{outline:none;border-bottom-color:var(--red);background:#fff4f6}
+.blank.ok{color:var(--green);border-bottom-color:var(--green);background:var(--green-tint)}
+.tried{color:var(--mid);text-decoration:line-through;text-decoration-thickness:1.5px;margin-right:.25em;font-weight:300}
+.fixw{color:var(--red);font-weight:500;border-bottom:2px solid var(--red)}
+
+/* help: one mark per Welsh letter, shown above the blank */
+.slot{ruby-position:over}
+.slot rt{font-size:13px;font-weight:500;letter-spacing:.12em;color:var(--red);line-height:1.2;padding-bottom:2px;white-space:pre}
+
+/* controls */
+.controls{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:22px}
+.left{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.left #rand{margin-top:10px}
+.right{display:flex;gap:10px}
+.quiet{border:1px solid var(--line);border-radius:8px;background:var(--paper);font-weight:500;font-size:15px;padding:12px 18px;min-height:48px}
+.quiet:hover:not(:disabled){background:var(--tint)}
+.go{border:1px solid var(--ink);border-radius:8px;background:var(--ink);color:#fff;font-weight:500;font-size:15px;padding:12px 22px;min-height:48px}
+.go:active,.quiet:active{transform:translateY(1px)}
+.go:disabled{opacity:.35;cursor:default;transform:none}
+.quiet.next{border-color:var(--ink)}
+/* Check's answer, under the Welsh: the space opens over half a second so the controls glide down */
+.reveal{height:0;overflow:hidden;transition:height .5s cubic-bezier(.3,.7,.3,1)}
+.reveal-in{padding-top:12px;opacity:0;transform:translateY(-6px);transition:opacity .35s ease .15s,transform .5s cubic-bezier(.3,.7,.3,1)}
+.reveal.open .reveal-in{opacity:1;transform:none}
+.fb{margin:0;text-align:center;font-weight:500;font-size:15px}
+.fb:empty{display:none}
+.eng{margin:0;text-align:center;font-size:18px;color:var(--mid)}
+.fb:not(:empty)+.eng{margin-top:4px}
+.fb.ok{color:var(--green)}
+.fb.no{color:var(--red)}
+.level{margin:6px 0 0;text-align:center;color:var(--mid);font-size:13px;font-weight:300}
+[hidden]{display:none!important}
+
+footer{margin-top:auto;padding-top:28px;text-align:center;font-size:12px;color:var(--mid);font-weight:300}
+.link{background:none;border:0;padding:8px 0;color:var(--mid);text-decoration:underline;font-size:12px;font-weight:300}
+
+@media (max-width:420px){.read{font-size:19px}}
+/* phones: half-size clock, fatter grab zones on the hands */
+@media (max-width:600px){.clock{width:min(170px,41vw)}.hit{stroke-width:64}.num-face{font-size:26px}}
+@media (max-width:400px){.controls .quiet,.controls .go{padding:12px 13px;font-size:14px}.right{gap:8px}.controls{gap:8px}}
+@media (max-width:350px){.controls{flex-wrap:wrap}.right{margin-left:auto}}
+@media (prefers-reduced-motion:reduce){.track,.track::after,.reveal,.reveal-in{transition:none}}
+</style>
+</head>
+<body>
+<div id="app" lang="en">
+  <a class="back" href="index.html">‹ wrevision</a>
+  <header>
+    <h1 lang="cy"><span class="mark">a</span>mser</h1>
+    <p class="lede"><span lang="cy">Faint o'r gloch yw hi?</span> · Drag the hands · De Cymru</p>
+  </header>
+
+  <svg class="clock" id="clock" viewBox="0 0 300 300" tabindex="0" role="slider" aria-label="Clock. Drag the hands, or use the arrow keys." aria-valuemin="0" aria-valuemax="1435">
+    <circle class="rim" cx="150" cy="150" r="142" fill="#fff" stroke="#1a1a1a" stroke-width="4"/>
+    <g id="ticks"></g>
+    <g id="nums"></g>
+    <g class="hand" data-hand="h" id="hourHand">
+      <line class="hit" x1="150" y1="150" x2="150" y2="82"/>
+      <line x1="150" y1="166" x2="150" y2="82" stroke="#1a1a1a" stroke-width="9" stroke-linecap="round"/>
+    </g>
+    <g class="hand" data-hand="m" id="minHand">
+      <line class="hit" x1="150" y1="150" x2="150" y2="34"/>
+      <line x1="150" y1="172" x2="150" y2="34" stroke="#c8102e" stroke-width="5" stroke-linecap="round"/>
+    </g>
+    <circle cx="150" cy="150" r="8" fill="#1a1a1a"/>
+    <circle cx="150" cy="150" r="3" fill="#c8102e"/>
+  </svg>
+
+  <p class="read" id="read" aria-live="polite"></p>
+  <div class="reveal" id="reveal"><div class="reveal-in">
+    <p class="fb" id="fb" aria-live="polite"></p>
+    <p class="eng" id="eng" aria-live="polite"></p>
+  </div></div>
+
+  <div class="controls">
+    <div class="left">
+      <label class="switch"><input type="checkbox" id="mode" role="switch"><span class="track" aria-hidden="true"></span><span><span lang="cy">Ymarfer</span> <span class="en">· practice</span></span></label>
+      <label class="switch"><input type="checkbox" id="mins" role="switch"><span class="track" aria-hidden="true"></span><span><span lang="cy">Munudau</span> <span class="en">· minutes</span></span></label>
+      <button class="quiet" id="rand">Randomise time</button>
+    </div>
+    <div class="right" id="acts">
+      <button class="quiet" id="help" hidden>Help</button>
+      <button class="go" id="check">Check</button>
+    </div>
+  </div>
+  <div id="practice" hidden>
+    <p class="level" id="level"></p>
+  </div>
+
+  <footer id="foot" hidden>Your progress saves automatically. Every three right answers blanks out one more word. Answers you used Help on don't count.<br><button class="link" id="reset">Reset my progress</button></footer>
+</div>
+<script>
+(function(){
+"use strict";
+
+/* ---------- Welsh time, South Wales / Mynediad style ---------- */
+/* {braces} mark a mutated letter so it can be shown in red */
+var HOURS=["","un","dau","tri","pedwar","pump","chwech","saith","wyth","naw","deg","un ar {dd}eg","deuddeg"];
+var SOFT={dau:"{dd}au",tri:"{d}ri",pedwar:"{b}edwar",pump:"{b}ump",pum:"{b}um",deg:"{dd}eg",deuddeg:"{dd}euddeg"};
+var MINS={5:"pum munud",10:"deg munud",15:"chwarter",20:"ugain munud",25:"pum munud ar {h}ugain",30:"hanner awr"};
+/* other minutes: the course's decimal numbers. pump→pum and chwech→chwe before a noun; munud softens after dau */
+var UNITS=["","un","dau","tri","pedwar","pum","chwe","saith","wyth","naw"];
+function minPhrase(n){
+  if(MINS[n])return MINS[n];
+  var t=Math.floor(n/10),u=n%10,w=[];
+  if(t===1)w.push("un","deg");else if(t===2)w.push("dau","{dd}eg");
+  if(u)w.push(UNITS[u]);
+  w.push(u===2?"{f}unud":"munud");
+  return w.join(" ");
+}
+function soft(phrase){var w=phrase.split(" ");w[0]=SOFT[w[0]]||w[0];return w.join(" ");}
+function partOfDay(h24){return h24<12?"bore":h24<18?"prynhawn":"nos";}
+
+function welsh(T){
+  var h24=Math.floor(T/60),m=T%60,h12=h24%12||12,part=["y",partOfDay(h24)],s;
+  if(m===0){
+    if(h24===12)s="hanner dydd";
+    else if(h24===0)s="hanner nos";
+    else s=soft(HOURS[h12])+" o'r {g}loch "+part.join(" ");
+  }else if(m<=30){
+    s=soft(minPhrase(m))+" wedi "+HOURS[h12]+" "+part.join(" ");
+  }else{
+    var nx=(h12%12)+1;
+    s=soft(minPhrase(60-m))+" i "+soft(HOURS[nx])+" "+part.join(" ");
+  }
+  return ("Mae hi'n "+s).split(" ");
+}
+/* the full sentence in English, revealed by Check */
+var EN=["","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"];
+function enNum(n){return n<=20?EN[n]:"twenty-"+EN[n-20];}
+function enMin(n){return n===15?"quarter":n===30?"half":n%5===0?enNum(n):enNum(n)+(n===1?" minute":" minutes");}
+function englishSentence(T){
+  var h24=Math.floor(T/60),m=T%60,h12=h24%12||12,
+      part=h24<12?"in the morning":h24<18?"in the afternoon":"at night";
+  if(m===0){
+    if(h24===12)return "It's midday.";
+    if(h24===0)return "It's midnight.";
+    return "It's "+EN[h12]+" o'clock "+part+".";
+  }
+  if(m<=30)return "It's "+enMin(m)+" past "+EN[h12]+" "+part+".";
+  return "It's "+enMin(60-m)+" to "+EN[(h12%12)+1]+" "+part+".";
+}
+function english(T){
+  var h24=Math.floor(T/60),m=T%60,h12=h24%12||12;
+  return h12+":"+(m<10?"0":"")+m+" "+(h24<12?"am":"pm");
+}
+
+/* ---------- saving (same method as hanfodion) ---------- */
+var KEY="amser-v1";
+var PRAISE=["Da iawn","Cywir","Gwych","Ardderchog","Perffaith"];
+function blankState(){return {correct:0,rev:0};}
+function loadLocal(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);if(o&&typeof o.correct==="number")return o;}}catch(e){}return null;}
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+var S=loadLocal()||blankState();
+var cloudDoc=null,pushT=null,pushing=false,dirty=false;
+function save(){S.rev=Date.now();saveLocal();pushSoon();}
+function pushSoon(){if(!cloudDoc)return;dirty=true;clearTimeout(pushT);pushT=setTimeout(push,1500);}
+function push(){
+  if(!cloudDoc||pushing||!dirty)return;
+  pushing=true;dirty=false;
+  cloudDoc.set({rev:S.rev,json:JSON.stringify(S)}).then(function(){pushing=false;if(dirty)pushSoon();},
+    function(e){pushing=false;if(!e||e.code!=="unavailable")cloudDoc=null;});
+}
+var PER=3;                                  /* right answers per extra blank */
+function blanksFor(total){return Math.min(total,1+Math.floor(S.correct/PER));}
+
+/* ---------- elements ---------- */
+var $=function(id){return document.getElementById(id);};
+var svg=$("clock"),hourHand=$("hourHand"),minHand=$("minHand"),read=$("read"),
+    mode=$("mode"),mins=$("mins"),practice=$("practice"),foot=$("foot"),rand=$("rand"),check=$("check"),
+    help=$("help"),acts=$("acts"),fb=$("fb"),eng=$("eng"),level=$("level"),reveal=$("reveal");
+function openReveal(){
+  reveal.classList.add("open");
+  reveal.style.height=reveal.scrollHeight+"px";
+}
+function closeReveal(){
+  if(!reveal.classList.contains("open"))return;
+  if(reveal.style.height==="auto"){reveal.style.height=reveal.offsetHeight+"px";void reveal.offsetHeight;}
+  reveal.classList.remove("open");
+  reveal.style.height="0px";
+}
+reveal.addEventListener("transitionend",function(e){
+  if(e.target!==reveal||e.propertyName!=="height")return;
+  if(reveal.classList.contains("open"))reveal.style.height="auto";   /* follows rewrapping on resize */
+  else{fb.textContent="";fb.className="fb";eng.textContent="";}
+});
+function step(){return mins.checked?1:5;}
+var NS="http://www.w3.org/2000/svg";
+
+(function face(){
+  var t="",n="";
+  for(var i=0;i<60;i++){
+    var big=i%5===0,a=i*Math.PI/30,r1=big?124:130,r2=136;
+    t+='<line x1="'+(150+r1*Math.sin(a)).toFixed(2)+'" y1="'+(150-r1*Math.cos(a)).toFixed(2)+'" x2="'+(150+r2*Math.sin(a)).toFixed(2)+'" y2="'+(150-r2*Math.cos(a)).toFixed(2)
+      +'" stroke="'+(big?"#1a1a1a":"#bdbdbd")+'" stroke-width="'+(big?3:1.5)+'" stroke-linecap="round"/>';
+  }
+  for(var h=1;h<=12;h++){
+    var b=h*Math.PI/6,r=104;
+    n+='<text class="num-face" x="'+(150+r*Math.sin(b)).toFixed(2)+'" y="'+(150-r*Math.cos(b)).toFixed(2)+'" text-anchor="middle" dominant-baseline="central">'+h+"</text>";
+  }
+  $("ticks").innerHTML=t;$("nums").innerHTML=n;
+})();
+
+/* ---------- state ---------- */
+function mod(a,n){return ((a%n)+n)%n;}
+var now=new Date();
+var T=mod(Math.round((now.getHours()*60+now.getMinutes())/5)*5,1440);  /* minutes since midnight, multiple of 5 */
+var angH=0,angM=0;            /* displayed hand angles */
+var words=[],marked=[],blanks=[],checked=false,animating=false;
+var hints=null,helpUsed=false;   /* hints: {wordIndex:{letters:[...],shown:{}}} */
+/* Welsh letters: ch, dd, ff, ng, ll, ph, rh, th each count as one */
+function letters(w){return w.match(/ch|dd|ff|ng|ll|ph|rh|th|./gi)||[];}
+
+function setHands(h,m){
+  angH=h;angM=m;
+  hourHand.setAttribute("transform","rotate("+h.toFixed(2)+" 150 150)");
+  minHand.setAttribute("transform","rotate("+m.toFixed(2)+" 150 150)");
+}
+function handsFor(t){return [mod(t,720)/2,mod(t,60)*6];}
+
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x;}return a;}
+/* the numbers and time words go first; "Mae hi'n" is blanked last */
+function pickBlanks(){
+  var idx=words.map(function(_,i){return i;});
+  return shuffle(idx.slice(2)).concat(shuffle(idx.slice(0,2)));
+}
+var order=[];
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");}
+
+function render(newTime){
+  marked=welsh(T);words=marked.map(function(w){return w.replace(/[{}]/g,"");});
+  if(newTime){order=pickBlanks();checked=false;closeReveal();}
+  var on=mode.checked;
+  blanks=on?order.slice(0,blanksFor(words.length)):[];
+  hints=null;helpUsed=false;
+  var h='<span class="num">'+english(T)+'</span><span class="sep" aria-hidden="true">|</span><span lang="cy">';
+  h+=words.map(function(w,i){
+    if(blanks.indexOf(i)<0)return esc(marked[i]).replace(/\{([^}]*)\}/g,'<span class="mut">$1</span>');
+    return '<ruby class="slot" data-i="'+i+'"><input class="blank" data-i="'+i+'" style="width:'+(w.length+1.6)+'ch" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" aria-label="Missing word"><rt hidden></rt></ruby>';
+  }).join(" ")+".</span>";
+  read.innerHTML=h;
+  svg.setAttribute("aria-valuenow",T);
+  svg.setAttribute("aria-valuetext",english(T));
+  check.disabled=checked;
+  help.disabled=!on||checked;
+  rand.classList.toggle("next",checked);
+  levelLine();
+}
+function levelLine(){
+  var n=blanksFor(words.length),max=n>=words.length;
+  var toNext=PER-(S.correct%PER);
+  level.textContent=S.correct+" right · "+n+(n===1?" word":" words")+" blanked"
+    +(max?" · that's all of them":" · one more after "+toNext+" more right");
+}
+function focusFirst(){var f=read.querySelector(".blank");if(f){try{f.focus({preventScroll:true});}catch(e){}}}
+
+/* ---------- help: first press shows _ for each letter, then each press reveals one at random ---------- */
+function drawHints(){
+  Object.keys(hints).forEach(function(i){
+    var hn=hints[i],rt=read.querySelector('.slot[data-i="'+i+'"] rt');
+    if(!rt)return;
+    rt.textContent=hn.letters.map(function(L,k){return hn.shown[k]||L==="'"?L:"_";}).join(" ");
+    rt.hidden=false;
+  });
+}
+function doHelp(){
+  if(!mode.checked||checked||animating)return;
+  helpUsed=true;
+  if(!hints){
+    hints={};
+    blanks.forEach(function(i){hints[i]={letters:letters(words[i]),shown:{}};});
+  }else{
+    var hidden=[];
+    Object.keys(hints).forEach(function(i){
+      var inp=read.querySelector('.blank[data-i="'+i+'"]');
+      if(!inp||inp.disabled)return;
+      hints[i].letters.forEach(function(L,k){if(L!=="'"&&!hints[i].shown[k])hidden.push([i,k]);});
+    });
+    if(hidden.length){var pick=hidden[Math.floor(Math.random()*hidden.length)];hints[pick[0]].shown[pick[1]]=true;}
+    if(hidden.length<=1)help.disabled=true;
+  }
+  drawHints();
+}
+
+/* ---------- checking ---------- */
+function norm(s){return s.trim().toLowerCase().replace(/[‘’ʼ`´]/g,"'").replace(/[.,!?]+$/,"");}
+function doCheck(){
+  if(checked||animating)return;
+  eng.textContent=englishSentence(T);
+  if(!mode.checked){
+    fb.textContent="";fb.className="fb";openReveal();
+    checked=true;check.disabled=true;rand.classList.add("next");
+    try{rand.focus({preventScroll:true});}catch(e){}
+    return;
+  }
+  var inputs=read.querySelectorAll(".blank"),all=true;
+  for(var k=0;k<inputs.length;k++){
+    var inp=inputs[k],want=words[+inp.getAttribute("data-i")],got=inp.value;
+    var slot=inp.closest(".slot"),rt=slot&&slot.querySelector("rt");
+    if(norm(got)===norm(want)){inp.classList.add("ok");inp.disabled=true;if(rt)rt.remove();}
+    else{
+      all=false;
+      var sp=document.createElement("span");
+      sp.innerHTML=(got.trim()?'<s class="tried">'+esc(got.trim())+"</s>":"")+'<span class="fixw">'+esc(want)+"</span>";
+      (slot||inp).replaceWith(sp);
+    }
+  }
+  checked=true;check.disabled=true;help.disabled=true;rand.classList.add("next");
+  if(all&&helpUsed){
+    fb.textContent=PRAISE[S.correct%PER]+" · with help, so it doesn't count this time";
+    fb.className="fb ok";
+  }else if(all){
+    S.correct++;save();
+    fb.textContent=PRAISE[(S.correct-1)%PRAISE.length]+(S.correct%PER===0&&1+S.correct/PER<=12?" · one more blank from now on":"");
+    fb.className="fb ok";
+  }else{
+    fb.innerHTML='<span lang="cy">Bron</span> — nearly. The right '+(inputs.length===1?"word is":"words are")+" in red.";
+    fb.className="fb no";
+  }
+  fb.lang="en";levelLine();openReveal();
+  try{rand.focus({preventScroll:true});}catch(e){}
+}
+
+/* ---------- randomise: animate hands over 1 second ---------- */
+var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+function randomise(){
+  if(animating)return;
+  var nt;
+  var st=step();
+  do{nt=Math.floor(Math.random()*(1440/st))*st;}while(Math.abs(nt-T)<30);
+  var to=handsFor(nt),h0=angH,m0=angM;
+  var dh=mod(to[0]-h0,360),dm=mod(to[1]-m0,360)+360;   /* both clockwise; minute hand takes one extra lap */
+  T=nt;
+  if(reduce){setHands(to[0],to[1]);render(true);focusFirst();return;}
+  animating=true;read.style.opacity=".25";
+  var t0=null;
+  function frame(ts){
+    if(t0===null)t0=ts;
+    var p=Math.min(1,(ts-t0)/1000),e=ease(p);
+    setHands(h0+dh*e,m0+dm*e);
+    if(p<1){requestAnimationFrame(frame);return;}
+    setHands(to[0],to[1]);animating=false;read.style.opacity="";
+    render(true);focusFirst();
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- dragging ---------- */
+var drag=null;
+function angleAt(e){
+  var pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;
+  var p=pt.matrixTransform(svg.getScreenCTM().inverse());
+  return mod(Math.atan2(p.x-150,150-p.y)*180/Math.PI,360);
+}
+function diff(a,b){var d=mod(a-b,360);return d>180?d-360:d;}
+/* stop the page scrolling when a finger lands on a hand */
+svg.addEventListener("touchstart",function(e){
+  if(e.target.closest&&e.target.closest("[data-hand]"))e.preventDefault();
+},{passive:false});
+svg.addEventListener("pointerdown",function(e){
+  if(animating)return;
+  var a=angleAt(e),g=e.target.closest&&e.target.closest("[data-hand]"),which;
+  if(!g&&e.pointerType!=="mouse")return;       /* on touch, only a hand grabs; anywhere else scrolls the page */
+  if(g)which=g.getAttribute("data-hand");
+  else which=Math.abs(diff(a,angH))<Math.abs(diff(a,angM))?"h":"m";
+  drag={hand:which,last:a,raw:T,id:e.pointerId};
+  try{svg.setPointerCapture(e.pointerId);}catch(_){}
+  svg.classList.add("dragging");
+  e.preventDefault();
+  move(e);
+});
+function move(e){
+  if(!drag||e.pointerId!==drag.id)return;
+  var a=angleAt(e),d=diff(a,drag.last);drag.last=a;
+  drag.raw+=drag.hand==="m"?d/6:d*2;           /* minute hand: 6° a minute; hour hand: 0.5° a minute */
+  var st=step(),nt=mod(Math.round(drag.raw/st)*st,1440);
+  if(nt!==T){T=nt;var hm=handsFor(T);setHands(hm[0],hm[1]);render(true);}
+}
+svg.addEventListener("pointermove",move);
+function end(e){if(!drag||e.pointerId!==drag.id)return;drag=null;svg.classList.remove("dragging");}
+svg.addEventListener("pointerup",end);
+svg.addEventListener("pointercancel",end);
+svg.addEventListener("keydown",function(e){
+  var dir={ArrowRight:1,ArrowUp:1,ArrowLeft:-1,ArrowDown:-1}[e.key];
+  if(!dir||animating)return;
+  e.preventDefault();
+  T=mod(T+dir*(e.shiftKey?60:step()),1440);
+  var hm=handsFor(T);setHands(hm[0],hm[1]);render(true);
+});
+
+/* ---------- controls ---------- */
+mode.addEventListener("change",function(){
+  practice.hidden=foot.hidden=help.hidden=!mode.checked;
+  render(true);
+  if(mode.checked)focusFirst();
+});
+mins.addEventListener("change",function(){
+  if(!mins.checked&&T%5){if(animating)return;T=mod(Math.round(T/5)*5,1440);var hm=handsFor(T);setHands(hm[0],hm[1]);render(true);}
+});
+rand.addEventListener("click",randomise);
+help.addEventListener("click",doHelp);
+check.addEventListener("click",doCheck);
+read.addEventListener("keydown",function(e){
+  if(e.key!=="Enter"||!e.target.classList.contains("blank"))return;
+  e.preventDefault();
+  var all=[].slice.call(read.querySelectorAll(".blank")),i=all.indexOf(e.target);
+  var empty=all.filter(function(x){return !x.value.trim();});
+  if(i<all.length-1&&empty.length)all[i+1].focus();else doCheck();
+});
+document.addEventListener("keydown",function(e){
+  if(e.key==="Enter"&&checked&&document.activeElement===document.body){e.preventDefault();randomise();}
+});
+$("reset").addEventListener("click",function(){
+  if(confirm("Reset your score and go back to one blank?")){S=blankState();save();render(true);}
+});
+
+var hm0=handsFor(T);setHands(hm0[0],hm0[1]);render(true);
+
+/* When opened as a Claude artifact, also keep progress with the account so it survives a cleared browser. */
+(function(){
+  if(!window.claude||typeof window.claude.use!=="function")return;
+  Promise.all([window.claude.use("db"),window.claude.use("user")]).then(function(r){
+    var db=r[0],user=r[1];
+    if(!db||!user)return;
+    return user.id().then(function(uid){
+      if(!uid)return;
+      var ref=db.doc("data/users/"+uid+"/amser");
+      return ref.get().then(function(snap){
+        cloudDoc=ref;
+        var d=snap.exists?snap.data():null,crev=d&&typeof d.rev==="number"?d.rev:0;
+        if(d&&typeof d.json==="string"&&crev>(S.rev||0)){
+          try{var c=JSON.parse(d.json);if(c&&typeof c.correct==="number"){S=c;saveLocal();render(false);}}catch(e){}
+        }else if((S.rev||0)>crev){pushSoon();}
+      });
+    });
+  }).catch(function(){});
+})();
+
+})();
+</script>
+</body>
+</html>
