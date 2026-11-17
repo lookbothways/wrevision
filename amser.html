@@ -44,10 +44,10 @@ h1 .mark{color:var(--red)}
 .switch .en{color:var(--mid);font-weight:300}
 
 /* clock */
-.clock{display:block;width:min(340px,82vw);height:auto;margin:0 auto;touch-action:none;user-select:none;-webkit-user-select:none}
+.clock{display:block;width:min(340px,82vw);height:auto;margin:0 auto;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .clock:focus{outline:none}
 .clock:focus-visible .rim{stroke:var(--red)}
-.hand{cursor:grab}
+.hand{cursor:grab;touch-action:none}
 .dragging .hand,.dragging{cursor:grabbing}
 .hit{stroke:transparent;stroke-width:34;stroke-linecap:round}
 .num-face{font-family:'Roboto',sans-serif;font-weight:500;font-size:22px;fill:var(--ink)}
@@ -96,6 +96,8 @@ footer{margin-top:auto;padding-top:28px;text-align:center;font-size:12px;color:v
 .link{background:none;border:0;padding:8px 0;color:var(--mid);text-decoration:underline;font-size:12px;font-weight:300}
 
 @media (max-width:420px){.read{font-size:19px}}
+/* phones: half-size clock, fatter grab zones on the hands */
+@media (max-width:600px){.clock{width:min(170px,41vw)}.hit{stroke-width:64}.num-face{font-size:26px}}
 @media (max-width:400px){.controls .quiet,.controls .go{padding:12px 13px;font-size:14px}.right{gap:8px}.controls{gap:8px}}
 @media (max-width:350px){.controls{flex-wrap:wrap}.right{margin-left:auto}}
 @media (prefers-reduced-motion:reduce){.track,.track::after,.reveal,.reveal-in{transition:none}}
@@ -413,9 +415,14 @@ function angleAt(e){
   return mod(Math.atan2(p.x-150,150-p.y)*180/Math.PI,360);
 }
 function diff(a,b){var d=mod(a-b,360);return d>180?d-360:d;}
+/* stop the page scrolling when a finger lands on a hand */
+svg.addEventListener("touchstart",function(e){
+  if(e.target.closest&&e.target.closest("[data-hand]"))e.preventDefault();
+},{passive:false});
 svg.addEventListener("pointerdown",function(e){
   if(animating)return;
   var a=angleAt(e),g=e.target.closest&&e.target.closest("[data-hand]"),which;
+  if(!g&&e.pointerType!=="mouse")return;       /* on touch, only a hand grabs; anywhere else scrolls the page */
   if(g)which=g.getAttribute("data-hand");
   else which=Math.abs(diff(a,angH))<Math.abs(diff(a,angM))?"h":"m";
   drag={hand:which,last:a,raw:T,id:e.pointerId};
