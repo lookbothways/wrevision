@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>wrevision — Mynediad Unedau 1–10</title>
+<title>wrevision — Mynediad Unedau 1–18</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -161,7 +161,7 @@
 
   <header>
     <h1><span class="mark">w</span>revision</h1>
-    <p class="tagline">Mynediad · Unedau 1–10 · De Cymru</p>
+    <p class="tagline">Mynediad · Unedau 1–18 · De Cymru</p>
   </header>
 
   <a class="unit hanfodion-link" href="hanfodion.html">
@@ -172,6 +172,11 @@
   <a class="unit hanfodion-link" href="amser.html">
     <span class="unit-pill">Amser</span>
     <span class="unit-title">Faint o'r gloch yw hi?<span class="unit-sub">Telling the time · drag the clock hands</span></span>
+    <span class="chev">›</span>
+  </a>
+  <a class="unit hanfodion-link" href="practice.html">
+    <span class="unit-pill">Ymarfer</span>
+    <span class="unit-title">Llenwi'r bylchau<span class="unit-sub">Every unit, line by line · fill the gaps</span></span>
     <span class="chev">›</span>
   </a>
 
@@ -188,6 +193,14 @@
 <option value="uned-8">Uned 8</option>
 <option value="uned-9">Uned 9</option>
 <option value="uned-10">Uned 10</option>
+<option value="uned-11">Uned 11</option>
+<option value="uned-12">Uned 12</option>
+<option value="uned-13">Uned 13</option>
+<option value="uned-14">Uned 14</option>
+<option value="uned-15">Uned 15</option>
+<option value="uned-16">Uned 16</option>
+<option value="uned-17">Uned 17</option>
+<option value="uned-18">Uned 18</option>
     </select>
     <div class="toolbar-actions">
       <button onclick="setAll(true)">Agor Popeth</button>
@@ -396,7 +409,7 @@
           <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
           <div class="answer-wrap">
             <p class="answer">Dw i eisiau paned, os gwelwch chi&#x27;n dda.</p>
-            <div class="note">In South Wales, &#x27;Dw i&#x27;n moyn paned&#x27; is also very common.</div>
+            <div class="note">In South Wales, &#x27;Dw i&#x27;n moyn paned&#x27; is also very common in speech (the course book itself uses eisiau).</div>
           </div>
         </div>
         <div class="qcard">
@@ -467,7 +480,7 @@
           <div class="help-head">Y Gornel Ieithyddol (Linguistic Help)</div>
           <ul>
             <li><strong>The Golden Rule of Eisiau:</strong> Never, ever put 'yn' before 'eisiau'. It is ALWAYS <em>"Dw i eisiau"</em>, never <em>"Dw i'n eisiau"</em>.</li>
-<li><strong>Eisiau vs Moyn:</strong> In the South Wales course, you will encounter <em>'moyn'</em> as a regional alternative to <em>'eisiau'</em>. Because 'moyn' is a standard verbnoun, it <strong>does</strong> take 'yn': <em>Dw i'n moyn paned.</em> Both are completely acceptable!</li>
+<li><strong>Eisiau vs Moyn:</strong> The course book uses <em>'eisiau'</em> throughout, but you will hear <em>'moyn'</em> all over South Wales. Because 'moyn' is a standard verbnoun, it <strong>does</strong> take 'yn': <em>Dw i'n moyn paned.</em> Both are completely acceptable!</li>
 <li><strong>Third Person Rule:</strong> When stating that a specific person wants something, start the sentence with <strong>Mae</strong>. <em>Mae Aled eisiau coffi.</em></li>
           </ul>
         </div>
@@ -603,7 +616,7 @@
         </div>
         <div class="qcard">
           <div class="type-badge">CYMRAEG i SAESNEG</div>
-          <p class="question">Wnest ti chwarae golff ar ddydd Sadwrn? Naddo.</p>
+          <p class="question">Wnest ti chwarae golff dydd Sadwrn? Naddo.</p>
           <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
           <div class="answer-wrap">
             <p class="answer">Did you play golf on Saturday? No.</p>
@@ -621,11 +634,11 @@
         </div>
         <div class="qcard">
           <div class="type-badge">CYMRAEG i SAESNEG</div>
-          <p class="question">Wnaethon ni lanhau&#x27;r tŷ.</p>
+          <p class="question">Gwnaethon ni lanhau&#x27;r tŷ.</p>
           <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
           <div class="answer-wrap">
             <p class="answer">We cleaned the house.</p>
-            <div class="note">glanhau -&gt; lanhau (soft mutation after the subject &#x27;ni&#x27;).</div>
+            <div class="note">Statements keep the G (Gwnaethon ni); the question drops it (Wnaethon ni?). glanhau -&gt; lanhau after &#x27;ni&#x27;.</div>
           </div>
         </div>
         <div class="qcard">
@@ -695,7 +708,7 @@
         </div>
         <div class="qcard">
           <div class="type-badge">CYMRAEG i SAESNEG</div>
-          <p class="question">Maen nhw&#x27;n gorfod gweithio ar ddydd Llun.</p>
+          <p class="question">Maen nhw&#x27;n gorfod gweithio dydd Llun.</p>
           <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
           <div class="answer-wrap">
             <p class="answer">They have to work on Monday.</p>
@@ -707,7 +720,7 @@
           <p class="question">He is playing football on Saturday.</p>
           <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
           <div class="answer-wrap">
-            <p class="answer">Mae e&#x27;n chwarae pêl-droed ar ddydd Sadwrn.</p>
+            <p class="answer">Mae e&#x27;n chwarae pêl-droed dydd Sadwrn.</p>
             <div class="note">In South Wales, use &#x27;Mae e&#x27;n&#x27; for &#x27;He is&#x27;.</div>
           </div>
         </div>
@@ -742,7 +755,7 @@
         <div class="help-box">
           <div class="help-head">Y Gornel Ieithyddol (Linguistic Help)</div>
           <ul>
-            <li><strong>The Weather Pronoun:</strong> The word 'tywydd' is referred to using the feminine pronoun 'hi'. So, "It is cold" is translated literally as "She is cold": <em>Mae hi'n oer.</em></li>
+            <li><strong>The Weather Pronoun:</strong> For weather (and later, time) Welsh uses the feminine pronoun 'hi' for 'it' — not because 'tywydd' is feminine (it isn't). <em>Mae hi'n oer.</em> Many people just say <em>Mae'n oer.</em></li>
 <li><strong>Third Person Pronouns:</strong> We expand beyond 'I' and 'You' here. <strong>Mae e'n</strong> (He is), <strong>Mae hi'n</strong> (She is), <strong>Maen nhw'n</strong> (They are). <em>Note: In North Wales, they say 'Mae o'n' for 'He is'.</em></li>
 <li><strong>Gorfod (Having to):</strong> A very useful verb to express obligation. "Dw i'n gorfod" (I must / I have to). Just link it like a normal verb!</li>
           </ul>
@@ -909,8 +922,8 @@
           <p class="question">Hold the line.</p>
           <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
           <div class="answer-wrap">
-            <p class="answer">Daliwch y llinell.</p>
-            
+            <p class="answer">Daliwch y lein.</p>
+            <div class="note">Or simply &#x27;Un funud&#x27; (one moment). The course uses &#x27;lein&#x27; for a phone line.</div>
           </div>
         </div>
         <div class="qcard">
@@ -926,8 +939,8 @@
         <div class="help-box">
           <div class="help-head">Y Gornel Ieithyddol (Linguistic Help)</div>
           <ul>
-            <li><strong>Asking Permission (Gaf i):</strong> <em>Gaf i...</em> means 'May I have...' or 'May I...'. If you answer it formally, you say <strong>Cewch</strong> (Yes, you may) or <strong>Na chewch</strong> (No, you may not).</li>
-<li><strong>Mewn vs Yn y:</strong> In Welsh, 'in a' (undefined) and 'in the' (defined) use different words. <em>Mewn ysgol</em> = In an school. <em>Yn yr ysgol</em> = In the school. (Yn y becomes yn yr before a vowel).</li>
+            <li><strong>Asking Permission (Gaf i):</strong> <em>Gaf i...</em> means 'May I have...' or 'May I...'. Answer someone you call <em>chi</em> with <strong>Cewch</strong> / <strong>Na chewch</strong>, and someone you call <em>ti</em> with <strong>Cei</strong> / <strong>Na chei</strong>.</li>
+<li><strong>Mewn vs Yn y:</strong> In Welsh, 'in a' (undefined) and 'in the' (defined) use different words. <em>Mewn ysgol</em> = In a school. <em>Yn yr ysgol</em> = In the school. (Yn y becomes yn yr before a vowel).</li>
 <li><strong>Pwy sy'n:</strong> When asking "Who is [doing something]?", we don't say "Pwy mae". We must use <strong>sy</strong> (a special form of the verb 'to be'). <em>Pwy sy'n galw?</em> (Who is calling?)</li>
           </ul>
         </div>
@@ -953,7 +966,7 @@
         </div>
         <div class="qcard">
           <div class="type-badge">CYMRAEG i SAESNEG</div>
-          <p class="question">Brynodd e lyfr ddoe.</p>
+          <p class="question">Prynodd e lyfr ddoe.</p>
           <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
           <div class="answer-wrap">
             <p class="answer">He bought a book yesterday.</p>
@@ -971,11 +984,11 @@
         </div>
         <div class="qcard">
           <div class="type-badge">CYMRAEG i SAESNEG</div>
-          <p class="question">Gwelon nhw&#x27;r gêm? Do.</p>
+          <p class="question">Welon nhw&#x27;r gêm? Do.</p>
           <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
           <div class="answer-wrap">
             <p class="answer">Did they see the game? Yes.</p>
-            
+            <div class="note">Question, so gwelon -&gt; welon.</div>
           </div>
         </div>
         <div class="qcard">
@@ -1113,6 +1126,742 @@
             <li><strong>Irregular Verb 'Mynd' (To go):</strong> The past tense of this verb does not follow the normal rules. You must memorize these forms: <strong>Es i</strong> (I went), <strong>Est ti</strong> (You went), <strong>Aeth e/hi</strong> (He/She went), <strong>Aethon ni</strong> (We went), <strong>Aethoch chi</strong> (You went), <strong>Aethon nhw</strong> (They went).</li>
 <li><strong>Negative of Irregular verbs:</strong> To say you *didn't* go, just drop <em>'ddim'</em> in after the pronoun. <em>Es i ddim</em> (I didn't go). <em>Aeth e ddim</em> (He didn't go).</li>
 <li><strong>No Mutation for Questions:</strong> Unlike regular verbs, you do not mutate 'Aeth...' to ask a question. <em>Aeth e i'r gêm?</em> (Did he go to the game?). The tone of your voice makes it a question!</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+    <details class="unit" id="uned-11" >
+      <summary>
+        <span class="unit-pill">Uned 11</span>
+        <span class="unit-title">Ces i dost i frecwast (Past - Cael)</span>
+        <span class="chev">›</span>
+      </summary>
+      <div class="unit-body">
+        <div class="qgrid">
+          
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I had porridge for breakfast.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Ces i uwd i frecwast.</p>
+            <div class="note">Ges i uwd is just as common. brecwast → frecwast after &#x27;i&#x27;.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Beth gest ti i ginio?</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">What did you have for lunch? (Informal)</p>
+            <div class="note">cinio → ginio after &#x27;i&#x27;.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">Did you have soup? (Formal) -&gt; Yes.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Gawsoch chi gawl? Do.</p>
+            <div class="note">Or Gaethoch chi gawl? The object mutates: cawl → gawl.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Cafodd Pat goffi yn y caffi.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Pat had coffee in the café.</p>
+            <div class="note">Or Gaeth Pat goffi. coffi → goffi as the object.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I didn&#x27;t get any post yesterday.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Ches i ddim post ddoe.</p>
+            <div class="note">C → Ch marks the negative. &#x27;ddim&#x27; blocks the object mutation, so post stays post.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Cawson nhw fargen yn y siop ddillad.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">They got a bargain in the clothes shop.</p>
+            <div class="note">bargen → fargen.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">We went to the beach. We had fine weather.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Aethon ni i&#x27;r traeth. Cawson ni dywydd braf.</p>
+            <div class="note">tywydd → dywydd as the object.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Gest ti frechdan yn y swyddfa? Naddo.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Did you have a sandwich in the office? No.</p>
+            
+          </div>
+        </div>
+        </div>
+        <div class="help-box">
+          <div class="help-head">Y Gornel Ieithyddol (Linguistic Help)</div>
+          <ul>
+            <li><strong>Two sets of forms:</strong> The book gives both — learn the one your tutor uses, recognise the other. <em>Ces i / Cest ti / Cafodd e,hi / Cawson ni / Cawsoch chi / Cawson nhw</em> or <em>Ges i / Gest ti / Gaeth e,hi / Gaethon ni / Gaethoch chi / Gaethon nhw</em>.</li>
+<li><strong>Questions:</strong> C softens to G — <em>Gest ti?</em> <em>Gawsoch chi?</em> <em>Gafodd e?</em> Answer <strong>Do</strong> / <strong>Naddo</strong>, as for every short-form past.</li>
+<li><strong>Negative (Treiglad Llaes):</strong> C → Ch: <em>Ches i ddim</em>. T, C, P verbs do the same (<em>Thalais i ddim, Phrynais i ddim</em>); other letters soften (<em>Ddarllenais i ddim</em>). 'ddim' stops the object mutating: <em>Ces i goffi</em> but <em>Ches i ddim coffi</em>.</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+    <details class="unit" id="uned-12" >
+      <summary>
+        <span class="unit-pill">Uned 12</span>
+        <span class="unit-title">Mae car gyda fi (Having)</span>
+        <span class="chev">›</span>
+      </summary>
+      <div class="unit-body">
+        <div class="qgrid">
+          
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I have a car.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Mae car gyda fi.</p>
+            <div class="note">Literally &#x27;there is a car with me&#x27;. Spoken: Mae car &#x27;da fi.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Oes plant gyda chi? Nac oes.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Have you got children? No.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I don&#x27;t have a dog.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Does dim ci gyda fi.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Mae dau o blant gyda hi.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">She has two children.</p>
+            <div class="note">plant → blant after &#x27;o&#x27;.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">Has Tomos got a car? -&gt; Yes.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Oes car gyda Tomos? Oes.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Faint o blant sy gyda fe?</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">How many children does he have?</p>
+            <div class="note">&#x27;sy&#x27; (not &#x27;mae&#x27;) after Faint.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I have one daughter.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Mae un ferch gyda fi.</p>
+            <div class="note">merch is feminine, so it softens after &#x27;un&#x27;. un mab doesn&#x27;t.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Does dim amser gyda ni.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">We haven&#x27;t got time.</p>
+            
+          </div>
+        </div>
+        </div>
+        <div class="help-box">
+          <div class="help-head">Y Gornel Ieithyddol (Linguistic Help)</div>
+          <ul>
+            <li><strong>Possession:</strong> Welsh says 'there is X with me'. <em>Mae car gyda fi / ti / fe / hi / ni / chi / nhw</em>. With a name: <em>Mae brawd gyda Bethan.</em></li>
+<li><strong>Question and negative:</strong> <em>Oes car gyda ti?</em> → <strong>Oes</strong> / <strong>Nac oes</strong>. Negative: <em>Does dim car gyda fi.</em></li>
+<li><strong>Counting:</strong> number + o + plural (softened): <em>dau o blant</em>. Or number + singular, minding gender: <em>un mab / un ferch, dau fab / dwy ferch, tri mab / tair merch, pedwar mab / pedair merch</em>.</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+    <details class="unit" id="uned-13" >
+      <summary>
+        <span class="unit-pill">Uned 13</span>
+        <span class="unit-title">Roedd hi&#x27;n braf (Was - Roedd)</span>
+        <span class="chev">›</span>
+      </summary>
+      <div class="unit-body">
+        <div class="qgrid">
+          
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">It was fine yesterday.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Roedd hi&#x27;n braf ddoe.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Oedd hi&#x27;n oer neithiwr? Nac oedd.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Was it cold last night? No.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">The food wasn&#x27;t good.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Doedd y bwyd ddim yn dda.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Roedd pen tost gyda fi.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">I had a headache.</p>
+            <div class="note">A part of the body hurting uses gyda.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">She had a cold.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Roedd annwyd arni hi.</p>
+            <div class="note">An illness &#x27;on&#x27; a person uses ar.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Roedd clust dost gyda fe.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">He had earache.</p>
+            <div class="note">clust is feminine, so tost → dost.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">How was the weather yesterday?</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Sut roedd y tywydd ddoe?</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Doedd e ddim yn hapus achos roedd e&#x27;n hwyr.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">He wasn&#x27;t happy because he was late.</p>
+            
+          </div>
+        </div>
+        </div>
+        <div class="help-box">
+          <div class="help-head">Y Gornel Ieithyddol (Linguistic Help)</div>
+          <ul>
+            <li><strong>Roedd / Oedd / Doedd:</strong> <em>Roedd hi'n braf</em> (It was fine). Question: <em>Oedd hi'n braf?</em> → <strong>Oedd</strong> / <strong>Nac oedd</strong>. Negative: <em>Doedd hi ddim yn braf.</em></li>
+<li><strong>Gyda vs Ar:</strong> Pain in a body part takes <em>gyda</em>: <em>Mae cefn tost gyda fi.</em> An illness takes <em>ar</em>: <em>Mae annwyd arna i.</em> ar changes: <em>arna i, arnat ti, arno fe, arni hi, arnon ni, arnoch chi, arnyn nhw</em>.</li>
+<li><strong>Mutations:</strong> Adjectives soften after 'yn' (<em>Roedd hi'n drist</em>) and after a singular feminine noun (<em>clust + tost = clust dost</em>).</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+    <details class="unit" id="uned-14" >
+      <summary>
+        <span class="unit-pill">Uned 14</span>
+        <span class="unit-title">Ble ro&#x27;ch chi&#x27;n byw? (Used to - Ro&#x27;n i)</span>
+        <span class="chev">›</span>
+      </summary>
+      <div class="unit-body">
+        <div class="qgrid">
+          
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I live in Tregaron.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Dw i&#x27;n byw yn Nhregaron.</p>
+            <div class="note">Nasal mutation after &#x27;yn&#x27; (in): T → Nh.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Ro&#x27;n i&#x27;n byw ym Mhenarth pan o&#x27;n i&#x27;n blentyn.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">I lived in Penarth when I was a child.</p>
+            <div class="note">P → Mh, and yn becomes ym.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">Where were you last night? (Informal)</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Ble ro&#x27;t ti neithiwr?</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Ro&#x27;n i&#x27;n gwrando ar y radio am saith o&#x27;r gloch.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">I was listening to the radio at seven o&#x27;clock.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I used to work in a factory.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Ro&#x27;n i&#x27;n (arfer) gweithio mewn ffatri.</p>
+            <div class="note">&#x27;arfer&#x27; is optional. No mutation after mewn.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">O&#x27;t ti&#x27;n hoffi cinio ysgol? Nac o&#x27;n.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Did you like school dinners? No.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">We used to work in Carmarthen.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Ro&#x27;n ni&#x27;n gweithio yng Nghaerfyrddin.</p>
+            <div class="note">C → Ngh, and yn becomes yng.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Do&#x27;n i ddim yn gwybod.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">I didn&#x27;t know.</p>
+            <div class="note">hoffi/lico, gwybod/nabod and eisiau always take this tense.</div>
+          </div>
+        </div>
+        </div>
+        <div class="help-box">
+          <div class="help-head">Y Gornel Ieithyddol (Linguistic Help)</div>
+          <ul>
+            <li><strong>Treiglad Trwynol (Nasal Mutation)</strong> after 'yn' (in): T → <em>yn Nh</em>, D → <em>yn N</em>, C → <em>yng Ngh</em>, G → <em>yng Ng</em>, P → <em>ym Mh</em>, B → <em>ym M</em>. 'yn' itself changes too. No mutation after <em>mewn</em> (in a).</li>
+<li><strong>Ro'n i (was / used to):</strong> <em>Ro'n i, Ro't ti, Roedd e/hi, Ro'n ni, Ro'ch chi, Ro'n nhw</em>. Question: <em>O'n i? O't ti? O'ch chi?</em> Negative: <em>Do'n i ddim</em>. Answers: <strong>O'n / Nac o'n</strong> (and O't, Oedd, O'ch).</li>
+<li><strong>Which past?</strong> One-off event: <em>Cerddais i i'r ysgol ddoe.</em> Repeated or ongoing: <em>Ro'n i'n cerdded i'r ysgol pan o'n i'n blentyn.</em> Always Ro'n i with <em>hoffi, gwybod, nabod, eisiau</em>: <em>Ro'n i eisiau</em> (no 'n).</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+    <details class="unit" id="uned-15" >
+      <summary>
+        <span class="unit-pill">Uned 15</span>
+        <span class="unit-title">Siarad wyneb yn wyneb (Dw i wedi)</span>
+        <span class="chev">›</span>
+      </summary>
+      <div class="unit-body">
+        <div class="qgrid">
+          
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I have answered every email.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Dw i wedi ateb pob ebost.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Wyt ti wedi cael brecwast? Ydw.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Have you had breakfast? Yes.</p>
+            <div class="note">wedi questions are answered like the present: Ydw / Nac ydw.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I haven&#x27;t been to Las Vegas.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Dw i ddim wedi bod yn Las Vegas.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Mae hi wedi ymddeol.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">She has retired.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">Do you want another drink? (Informal)</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Wyt ti eisiau diod arall?</p>
+            <div class="note">arall (another) goes after the noun.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Anghofiais i ddod i apwyntiad ddoe.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">I forgot to come to an appointment yesterday.</p>
+            <div class="note">dod → ddod after the short-form verb.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">We are going on holiday in July.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">&#x27;Dyn ni&#x27;n mynd ar wyliau ym mis Gorffennaf.</p>
+            <div class="note">ym mis = in (the month of).</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Oes copi gyda chi, os gwelwch chi&#x27;n dda?</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Have you got a copy, please?</p>
+            
+          </div>
+        </div>
+        </div>
+        <div class="help-box">
+          <div class="help-head">Y Gornel Ieithyddol (Linguistic Help)</div>
+          <ul>
+            <li><strong>Perfect tense (have done):</strong> swap the linking 'yn' for <strong>wedi</strong>. <em>Dw i'n darllen</em> (I am reading) → <em>Dw i wedi darllen</em> (I have read). Negative: <em>Dw i ddim wedi...</em></li>
+<li><strong>Three pasts:</strong> <em>Darllenais i</em> (I read), <em>Ro'n i'n darllen</em> (I was reading), <em>Dw i wedi darllen</em> (I have read).</li>
+<li><strong>Misoedd:</strong> Ionawr, Chwefror, Mawrth, Ebrill, Mai, Mehefin, Gorffennaf, Awst, Medi, Hydref, Tachwedd, Rhagfyr. 'In August' = <em>ym mis Awst</em>.</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+    <details class="unit" id="uned-16" >
+      <summary>
+        <span class="unit-pill">Uned 16</span>
+        <span class="unit-title">Rhifau, Amser ac Arian</span>
+        <span class="chev">›</span>
+      </summary>
+      <div class="unit-body">
+        <div class="qgrid">
+          
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">What time is it?</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Faint o&#x27;r gloch yw hi?</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Mae hi&#x27;n chwarter i bump.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">It&#x27;s quarter to five.</p>
+            <div class="note">pump → bump after &#x27;i&#x27;.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">It&#x27;s twenty-five past two.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Mae hi&#x27;n bum munud ar hugain wedi dau.</p>
+            <div class="note">25 = pum munud ar hugain, with munud in the middle. pum → bum after &#x27;yn&#x27;.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Faint o&#x27;r gloch mae&#x27;r dosbarth yn dechrau? Saith o&#x27;r gloch.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">What time does the class start? Seven o&#x27;clock.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I got up at half past six.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Codais i am hanner awr wedi chwech.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Es i i&#x27;r gwely am ddeg o&#x27;r gloch.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">I went to bed at ten o&#x27;clock.</p>
+            <div class="note">deg → ddeg after &#x27;am&#x27;.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">How much is the cake? -&gt; Two pounds.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Faint yw&#x27;r gacen? Dwy bunt.</p>
+            <div class="note">cacen and punt are both feminine: y gacen, dwy bunt.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Ydy&#x27;r bwyd yn ddrud? Nac ydy, ddim yn rhy ddrud.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Is the food expensive? No, not too expensive.</p>
+            <div class="note">rhy comes before the adjective and softens it.</div>
+          </div>
+        </div>
+        </div>
+        <div class="help-box">
+          <div class="help-head">Y Gornel Ieithyddol (Linguistic Help)</div>
+          <ul>
+            <li><strong>Time uses 'hi':</strong> <em>Mae hi'n bump o'r gloch.</em> Numbers soften after <em>yn</em>, <em>i</em> and <em>am</em>: <em>Mae hi'n ddau</em>, <em>chwarter i bedwar</em>, <em>am bump</em>.</li>
+<li><strong>Old numbers for time:</strong> 20 = <em>ugain</em>, 25 = <em>pum munud ar hugain</em>. munud and awr sit in the middle: <em>pedair awr ar hugain</em> (24 hours).</li>
+<li><strong>Money:</strong> punt and ceiniog are feminine: <em>punt, dwy bunt, tair punt, pedair punt, pum punt</em>. tri and chwe cause the Treiglad Llaes: <em>chwe phunt, tri phlentyn</em>.</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+    <details class="unit" id="uned-17" >
+      <summary>
+        <span class="unit-pill">Uned 17</span>
+        <span class="unit-title">Bydd hi&#x27;n braf yfory (Future - Bydd)</span>
+        <span class="chev">›</span>
+      </summary>
+      <div class="unit-body">
+        <div class="qgrid">
+          
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">It will be fine tonight.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Bydd hi&#x27;n braf heno.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Fydd hi&#x27;n bwrw eira ar yr Wyddfa? Bydd.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Will it be snowing on Snowdon? Yes.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">How will the weather be tomorrow?</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Sut bydd y tywydd yfory?</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Fydd Bethan ddim yn brysur heno.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Bethan won&#x27;t be busy tonight.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">Will it be raining in Blaenau Ffestiniog? -&gt; No.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Fydd hi&#x27;n bwrw glaw ym Mlaenau Ffestiniog? Na fydd.</p>
+            <div class="note">Nasal mutation: Blaenau → ym Mlaenau.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Bydd e&#x27;n gallu darllen yr ebost yn y gwesty.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">He will be able to read the email in the hotel.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I will be in work tomorrow.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Bydda i yn y gwaith yfory.</p>
+            <div class="note">No linking &#x27;n here — &#x27;yn y&#x27; means &#x27;in the&#x27;.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Pryd bydd e&#x27;n ôl?</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">When will he be back?</p>
+            
+          </div>
+        </div>
+        </div>
+        <div class="help-box">
+          <div class="help-head">Y Gornel Ieithyddol (Linguistic Help)</div>
+          <ul>
+            <li><strong>Future of bod:</strong> <em>Bydd e/hi</em> (he/she/it will be), <em>Fydd e/hi?</em> (will...?), <em>Fydd e/hi ddim</em> (won't be). Also <em>Bydda i, Fydda i?, Fydda i ddim</em>.</li>
+<li><strong>Answers:</strong> <em>Fydd hi'n braf?</em> → <strong>Bydd</strong> / <strong>Na fydd</strong>.</li>
+<li><strong>Same 'yn' rules as always:</strong> verbs don't mutate, nouns and adjectives do. <em>Bydd hi'n gweithio / Bydd hi'n diwtor / Bydd hi'n brysur.</em></li>
+          </ul>
+        </div>
+      </div>
+    </details>
+    <details class="unit" id="uned-18" >
+      <summary>
+        <span class="unit-pill">Uned 18</span>
+        <span class="unit-title">Bydda i&#x27;n mynd (Future - Bydda i)</span>
+        <span class="chev">›</span>
+      </summary>
+      <div class="unit-body">
+        <div class="qgrid">
+          
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">I will be working next week.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Bydda i&#x27;n gweithio yr wythnos nesa.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Fyddi di&#x27;n siopa yfory? Na fydda.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Will you be shopping tomorrow? No.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">We will be flying tomorrow morning.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Byddwn ni&#x27;n hedfan bore yfory.</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Pryd byddwch chi&#x27;n cyrraedd?</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">When will you be arriving?</p>
+            
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">What will you be doing tonight? (Informal)</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Beth fyddi di&#x27;n wneud heno?</p>
+            <div class="note">gwneud → wneud here.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Byddan nhw&#x27;n mynd i&#x27;r farchnad.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">They will be going to the market.</p>
+            <div class="note">marchnad is feminine, so i&#x27;r farchnad.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">SAESNEG i GYMRAEG</div>
+          <p class="question">If it&#x27;s fine tomorrow, I&#x27;ll go for a walk in the park.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">Os bydd hi&#x27;n braf yfory, bydda i&#x27;n mynd am dro yn y parc.</p>
+            <div class="note">Welsh uses the future after os: os bydd.</div>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="type-badge">CYMRAEG i SAESNEG</div>
+          <p class="question">Fydda i ddim ar gael dydd Llun.</p>
+          <button class="reveal-btn" onclick="toggleAnswer(this)">Dangos yr Ateb</button>
+          <div class="answer-wrap">
+            <p class="answer">I won&#x27;t be available on Monday.</p>
+            
+          </div>
+        </div>
+        </div>
+        <div class="help-box">
+          <div class="help-head">Y Gornel Ieithyddol (Linguistic Help)</div>
+          <ul>
+            <li><strong>The whole future:</strong> <em>Bydda i, Byddi di, Bydd e/hi, Byddwn ni, Byddwch chi, Byddan nhw</em>. Questions soften B → F: <em>Fyddi di?</em> Negative: <em>Fydda i ddim</em>.</li>
+<li><strong>Answers follow the verb:</strong> <em>Fyddi di?</em> → <strong>Bydda / Na fydda</strong>. <em>Fyddwch chi?</em> → <strong>Bydda</strong> (I) or <strong>Byddwn</strong> (we). <em>Fyddan nhw?</em> → <strong>Byddan / Na fyddan</strong>.</li>
+<li><strong>Os and ar gyfer:</strong> <em>Os bydd hi'n braf, bydda i'n...</em> (If it's fine, I'll...). <em>ar gyfer</em> = for: <em>dillad ar gyfer y parti</em>.</li>
           </ul>
         </div>
       </div>

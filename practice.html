@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="cy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ymarfer — wrevision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --ink:#1a1a1a;--mid:#6b6b6b;--line:#e4e4e4;--paper:#ffffff;--tint:#f7f7f7;
+  --red:#c8102e;--green:#1f8a4c;--green-tint:#eaf6ef;--radius:10px;
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{height:100%;margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Roboto',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight:400;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+#app{min-height:100%;max-width:720px;margin:0 auto;padding:28px 20px 40px;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.back{font-size:14px;color:var(--mid);text-decoration:none;
+  border:1px solid var(--line);border-radius:8px;padding:7px 12px}
+.back:hover{background:var(--tint)}
+.score{font-size:14px;font-weight:300;color:#505050;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* random line + unit range */
+.rand-row{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.rand-row .go{flex:none}
+.range{flex:1;display:flex;align-items:center;gap:12px;min-width:0}
+.range input{flex:1;min-width:0;accent-color:var(--red);height:28px;margin:0;cursor:pointer}
+.range .upto{font-size:14px;color:var(--mid);white-space:nowrap;font-variant-numeric:tabular-nums;min-width:5.6em;text-align:right}
+#randBox .panel{margin:-8px 0 22px}
+.from{margin:0 0 14px;text-align:center}
+header{text-align:center;margin-bottom:22px}
+h1{font-size:30px;font-weight:700;letter-spacing:-.5px;margin:0 0 4px}
+h1 .mark{color:var(--red)}
+.lede{font-size:14px;color:var(--mid);font-weight:300;margin:0}
+
+/* units */
+.unit{border:1px solid var(--line);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
+.unit summary{list-style:none;display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;font-weight:500;background:var(--paper)}
+.unit summary::-webkit-details-marker{display:none}
+.unit[open] summary{border-bottom:1px solid var(--line)}
+.unit-pill{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;font-weight:500;color:var(--red);
+  border:1px solid var(--line);border-radius:999px;padding:5px 10px;white-space:nowrap}
+.unit-title{flex:1;font-size:16px}
+.tally{font-weight:400;font-size:13px;color:var(--mid);font-variant-numeric:tabular-nums}
+.chev{color:var(--mid);transition:transform .2s ease;font-size:18px}
+.unit[open] .chev{transform:rotate(90deg)}
+.unit-body{padding:18px;background:var(--tint)}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px 16px 18px}
+
+/* switch */
+.switch{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;font-weight:500;user-select:none;-webkit-user-select:none;padding:6px 0;white-space:nowrap}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.track{position:relative;width:42px;height:24px;border-radius:999px;background:var(--line);transition:background .2s ease;flex:none}
+.track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;
+  box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .2s ease}
+.switch input:checked+.track{background:var(--red)}
+.switch input:checked+.track::after{transform:translateX(18px)}
+.switch input:focus-visible+.track{outline:2px solid var(--red);outline-offset:2px}
+.switch .en{color:var(--mid);font-weight:300}
+
+/* the Welsh line */
+.read{margin:0;text-align:center;font-size:21px;line-height:1.75;font-weight:400;color:var(--ink);min-height:2.4em}
+.read .mut{color:var(--red)}
+.blank{font:inherit;color:var(--ink);background:var(--tint);border:0;border-bottom:2px solid var(--ink);border-radius:4px 4px 0 0;
+  padding:0 4px;margin:0 1px;text-align:center;min-width:2.2ch;height:1.45em;vertical-align:baseline}
+.blank:focus{outline:none;border-bottom-color:var(--red);background:#fff4f6}
+.blank.ok{color:var(--green);border-bottom-color:var(--green);background:var(--green-tint)}
+.tried{color:var(--mid);text-decoration:line-through;text-decoration-thickness:1.5px;margin-right:.25em;font-weight:300}
+.fixw{color:var(--red);font-weight:500;border-bottom:2px solid var(--red)}
+.slot{ruby-position:over}
+.slot rt{font-size:13px;font-weight:500;letter-spacing:.12em;color:var(--red);line-height:1.2;padding-bottom:2px;white-space:pre}
+
+/* answer area: opens over half a second so the controls glide down */
+.reveal{height:0;overflow:hidden;transition:height .5s cubic-bezier(.3,.7,.3,1)}
+.reveal-in{padding-top:12px;opacity:0;transform:translateY(-6px);transition:opacity .35s ease .15s,transform .5s cubic-bezier(.3,.7,.3,1)}
+.reveal.open .reveal-in{opacity:1;transform:none}
+.fb{margin:0;text-align:center;font-weight:500;font-size:15px}
+.fb:empty,.nt:empty{display:none}
+.fb.ok{color:var(--green)}
+.fb.no{color:var(--red)}
+.eng{margin:0;text-align:center;font-size:18px;color:var(--mid)}
+.fb:not(:empty)+.eng{margin-top:4px}
+.nt{margin:6px auto 0;text-align:center;font-size:13px;font-style:italic;color:var(--mid);max-width:44ch}
+
+/* controls */
+.controls{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:20px}
+.left{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.left #next{margin-top:10px}
+.right{display:flex;gap:10px}
+.quiet{border:1px solid var(--line);border-radius:8px;background:var(--paper);font-weight:500;font-size:15px;padding:12px 18px;min-height:48px}
+.quiet:hover:not(:disabled){background:var(--tint)}
+.go{border:1px solid var(--ink);border-radius:8px;background:var(--ink);color:#fff;font-weight:500;font-size:15px;padding:12px 22px;min-height:48px}
+.go:active,.quiet:active{transform:translateY(1px)}
+.go:disabled,.quiet:disabled{opacity:.35;cursor:default;transform:none}
+.quiet.next{border-color:var(--ink)}
+.level{margin:10px 0 0;text-align:center;color:var(--mid);font-size:13px;font-weight:300}
+[hidden]{display:none!important}
+
+footer{margin-top:auto;padding-top:28px;text-align:center;font-size:12px;color:var(--mid);font-weight:300}
+.link{background:none;border:0;padding:8px 0;color:var(--mid);text-decoration:underline;font-size:12px;font-weight:300}
+
+@media (max-width:420px){.read{font-size:19px}.unit-body{padding:12px}}
+@media (max-width:400px){.controls .quiet,.controls .go{padding:12px 13px;font-size:14px}.right{gap:8px}.controls{gap:8px}}
+@media (max-width:350px){.controls{flex-wrap:wrap}.right{margin-left:auto}}
+@media (prefers-reduced-motion:reduce){.track,.track::after,.reveal,.reveal-in,.chev{transition:none}}
+</style>
+</head>
+<body>
+<div id="app" lang="en">
+  <div class="top">
+    <a class="back" href="index.html">‹ wrevision</a>
+    <span class="score" id="score" aria-live="off"></span>
+  </div>
+  <header>
+    <h1 lang="cy"><span class="mark">y</span>marfer</h1>
+    <p class="lede"><span lang="cy">Llenwi'r bylchau</span> · Fill the gaps · <span id="span"></span> · De Cymru</p>
+  </header>
+
+  <div class="rand-row">
+    <button class="go" id="randLine">Random line</button>
+    <label class="range"><input type="range" id="upto" min="1" step="1" aria-label="Random lines from units 1 up to"><span class="upto" lang="cy" id="uptoLabel"></span></label>
+  </div>
+  <div id="randBox"></div>
+
+  <div id="units"></div>
+
+  <footer>Red letters are mutations (where a g has dropped off, the new first letter is red).<br>Your progress saves automatically. Each time you get a line right without Help, it hides one more word the next time it comes up.<br><button class="link" id="reset">Reset my progress</button></footer>
+</div>
+<script>
+(function(){
+"use strict";
+
+/* ---------- the lines: [unit, title, [[Welsh, English, note]]] ---------- */
+/* {braces} mark a mutated letter so it can be shown in red */
+var U=[
+[1,"Helô, sut dych chi?",[
+ ["Prynhawn da. Sut dych chi?","Good afternoon. How are you? (formal)",""],
+ ["Wedi blino'n {l}ân.","Exhausted.","glân → lân after 'n."],
+ ["Da iawn, diolch. Sut wyt ti?","Very well, thanks. How are you? (informal)",""],
+ ["Pwy dych chi?","Who are you?",""],
+ ["Dw i'n byw yn Abertawe. Ble dych chi'n byw?","I live in Swansea. Where do you live?",""],
+ ["Bore da, Siân dw i. Dw i'n byw yng {Ngh}aerdydd.","Good morning, I'm Siân. I live in Cardiff.","Caerdydd → yng Nghaerdydd (nasal mutation)."],
+ ["Ofnadwy!","Terrible!",""],
+ ["Noswaith {dd}a, croeso i {G}ymru.","Good evening, welcome to Wales.","noswaith is feminine, so da → dda. Cymru → Gymru after 'i'."]]],
+[2,"Wyt ti'n hoffi coffi?",[
+ ["Dw i'n hoffi chwarae rygbi, ond dw i ddim yn hoffi chwarae pêl-droed.","I like playing rugby, but I don't like playing football.",""],
+ ["Wyt ti'n lico siocled?","Do you like chocolate? (informal)","lico and hoffi both work in the south."],
+ ["Dych chi'n gwylio Emmerdale? Nac ydw.","Do you watch Emmerdale? No.",""],
+ ["Dych chi'n dysgu Cymraeg? Ydw.","Are you learning Welsh? Yes.",""],
+ ["Dw i'n mwynhau mynd i'r sinema.","I enjoy going to the cinema.",""],
+ ["Wyt ti'n darllen llyfr? Nac ydw.","Are you reading a book? No.",""],
+ ["Dw i ddim yn hoffi yfed cwrw.","I don't like drinking beer.",""],
+ ["Dw i ddim yn gweithio heddiw.","I'm not working today.",""]]],
+[3,"Dych chi eisiau paned?",[
+ ["Dw i eisiau paned, os gwelwch chi'n {dd}a.","I want a cuppa, please.","Never 'n before eisiau."],
+ ["Ble dych chi'n gweithio?","Where do you work?",""],
+ ["Mae Siôn eisiau mynd adre.","Siôn wants to go home.",""],
+ ["Dych chi eisiau bwyd? Nac ydw, diolch.","Do you want food? No, thanks.",""],
+ ["Dw i ddim eisiau gwylio'r teledu.","I don't want to watch the television.",""],
+ ["Mae Ceri eisiau hufen iâ.","Ceri wants ice cream.",""],
+ ["Ydy e eisiau coffi?","Does he want coffee?",""],
+ ["Wyt ti'n moyn dysgu?","Do you want to learn? (informal)","moyn is southern speech for eisiau, and it does take 'n."]]],
+[4,"Mynd a dod",[
+ ["Dw i'n dod o {B}ontypridd.","I come from Pontypridd.","Pontypridd → Bontypridd after 'o'."],
+ ["Dw i'n mynd i {G}aerdydd.","I'm going to Cardiff.","Caerdydd → Gaerdydd after 'i'."],
+ ["'Dyn ni'n mynd i'r {d}re yfory.","We're going to town tomorrow.","tref is feminine, so it softens even after 'r."],
+ ["O ble dych chi'n dod yn {w}reiddiol?","Where do you come from originally?",""],
+ ["Dw i'n mynd i'r {d}afarn wedyn.","I'm going to the pub later.","tafarn is feminine: i'r dafarn."],
+ ["Ble dych chi'n mynd heno?","Where are you going tonight?",""],
+ ["Dych chi'n mynd i {G}aerfyrddin heddiw?","Are you going to Carmarthen today?",""],
+ ["Dw i'n dod o {Dd}inbych.","I come from Denbigh.","Dinbych → Ddinbych after 'o'."]]],
+[5,"Beth wnest ti ddoe?",[
+ ["Beth {w}nest ti ddoe?","What did you do yesterday? (informal)","The g of gwnest drops after Beth."],
+ ["Gwnes i {w}ylio'r teledu neithiwr.","I watched the television last night.","gwylio → wylio after Gwnes i."],
+ ["{W}naethoch chi {g}inio neithiwr? Do.","Did you make dinner last night? Yes.",""],
+ ["{W}nest ti chwarae golff dydd Sadwrn? Naddo.","Did you play golf on Saturday? No.",""],
+ ["Gwnes i {l}awer o {w}aith heddiw.","I did a lot of work today.",""],
+ ["Gwnaethon ni {l}anhau'r tŷ.","We cleaned the house.","Statements keep the G; the question is Wnaethon ni?"],
+ ["Gwnes i {b}aned o {d}e.","I made a cup of tea.",""],
+ ["{W}naethon nhw {g}ysgu? Do.","Did they sleep? Yes.",""]]],
+[6,"Sut mae'r tywydd?",[
+ ["Sut mae'r tywydd heddiw?","What's the weather like today?",""],
+ ["Mae hi'n bwrw glaw ac mae hi'n {w}yntog.","It's raining and it's windy.",""],
+ ["Mae hi'n heulog, ond mae hi'n oer.","It's sunny, but it's cold.",""],
+ ["Maen nhw'n gorfod gweithio dydd Llun.","They have to work on Monday.",""],
+ ["Mae e'n chwarae pêl-droed dydd Sadwrn.","He's playing football on Saturday.","In the south it's Mae e'n."],
+ ["Mae'r tywydd yn ofnadwy dros y penwythnos.","The weather is terrible over the weekend.",""],
+ ["Mae hi'n {g}ymylog. Dw i'n gorfod aros i mewn.","It's cloudy. I have to stay in.",""],
+ ["Dydd Iau, dydd Gwener, dydd Sadwrn, dydd Sul.","Thursday, Friday, Saturday, Sunday.",""]]],
+[7,"Ydy hi'n gweithio?",[
+ ["Ydy e'n gwylio rygbi? Ydy.","Is he watching rugby? Yes.",""],
+ ["Ydy hi'n gweithio heddiw? Nac ydy.","Is she working today? No.",""],
+ ["Ydy Aled wedi blino? Ydy.","Is Aled tired? Yes.",""],
+ ["Dyw'r bwyd ddim yn {dd}a.","The food isn't good.",""],
+ ["Dyw e ddim yn mynd mas heno.","He isn't going out tonight.","mas is the southern word for 'out'."],
+ ["Ydyn nhw'n yfed coffi? Nac ydyn.","Are they drinking coffee? No.",""],
+ ["Ydyn nhw'n dod o {G}aerdydd? Ydyn.","Are they from Cardiff? Yes.",""],
+ ["'Dyn nhw ddim yn hoffi caws.","They don't like cheese.",""]]],
+[8,"Siarad ar y ffôn",[
+ ["Gaf i siarad â Sioned, os gwelwch chi'n {dd}a?","May I speak to Sioned, please?",""],
+ ["Gaf i {b}aned? Cewch.","May I have a cuppa? Yes, you may.",""],
+ ["Pwy sy'n galw?","Who's calling?","sy, not mae, after Pwy."],
+ ["Mae e'n gweithio mewn siop.","He works in a shop.","No mutation after mewn."],
+ ["Mae hi'n gweithio yn y coleg.","She works in the college.",""],
+ ["Gaf i {a}dael neges?","May I leave a message?","gadael → adael after Gaf i."],
+ ["Daliwch y lein.","Hold the line.",""],
+ ["Na {ch}ewch, mae'n {dd}rwg 'da fi.","No, you may not. I'm sorry.",""]]],
+[9,"Prynon ni fara",[
+ ["Gwyliais i ffilm neithiwr.","I watched a film last night.",""],
+ ["Prynodd e {l}yfr ddoe.","He bought a book yesterday.","The object softens: llyfr → lyfr."],
+ ["Prynon ni {f}ara a llaeth.","We bought bread and milk.",""],
+ ["{W}elon nhw'r gêm? Do.","Did they see the game? Yes.","Question, so gwelon → welon."],
+ ["{Dd}arllenoch chi'r papur? Naddo.","Did you read the paper? No.",""],
+ ["Dechreuon ni am naw o'r {g}loch.","We started at nine o'clock.",""],
+ ["Yfodd hi {d}e y bore 'ma.","She drank tea this morning.",""],
+ ["Gweithion nhw yn y {d}re.","They worked in town.",""]]],
+[10,"Es i i'r dre",[
+ ["Es i i'r sinema ddoe.","I went to the cinema yesterday.",""],
+ ["Aeth e i'r gwaith y bore 'ma.","He went to work this morning.",""],
+ ["Aethon ni i {f}wyty nos Sadwrn.","We went to a restaurant on Saturday night.",""],
+ ["Est ti i'r {d}re ddoe? Do.","Did you go to town yesterday? Yes.",""],
+ ["Es i ddim mas o {g}wbl.","I didn't go out at all.",""],
+ ["Aethon nhw i {L}oegr ar y trên.","They went to England on the train.",""],
+ ["Aethoch chi i'r ysbyty? Naddo.","Did you go to the hospital? No.",""],
+ ["Aeth hi ddim i'r dosbarth nos {F}ercher.","She didn't go to class on Wednesday night.",""]]],
+[11,"Ces i dost i frecwast",[
+ ["Ces i uwd i {f}recwast.","I had porridge for breakfast.","Ges i is just as common."],
+ ["Beth {g}est ti i {g}inio?","What did you have for lunch? (informal)",""],
+ ["{G}awsoch chi {g}awl? Do.","Did you have soup? Yes.","Or Gaethoch chi gawl?"],
+ ["Cafodd Pat {g}offi yn y caffi.","Pat had coffee in the café.","Or Gaeth Pat goffi."],
+ ["{Ch}es i ddim post ddoe.","I didn't get any post yesterday.","ddim stops post mutating."],
+ ["Cawson nhw {f}argen yn y siop {dd}illad.","They got a bargain in the clothes shop.","siop is feminine, so dillad → ddillad."],
+ ["Aethon ni i'r traeth. Cawson ni {d}ywydd braf.","We went to the beach. We had fine weather.",""],
+ ["{G}est ti {f}rechdan yn y swyddfa? Naddo.","Did you have a sandwich in the office? No.",""]]],
+[12,"Mae car gyda fi",[
+ ["Mae car gyda fi.","I have a car.","Spoken: Mae car 'da fi."],
+ ["Oes plant gyda chi? Nac oes.","Have you got children? No.",""],
+ ["Does dim ci gyda fi.","I don't have a dog.",""],
+ ["Mae dau o {b}lant gyda hi.","She has two children.",""],
+ ["Oes car gyda Tomos? Oes.","Has Tomos got a car? Yes.",""],
+ ["Faint o {b}lant sy gyda fe?","How many children does he have?",""],
+ ["Mae un {f}erch gyda fi.","I have one daughter.","merch is feminine, so it softens after un."],
+ ["Does dim amser gyda ni.","We haven't got time.",""]]],
+[13,"Roedd hi'n braf",[
+ ["Roedd hi'n braf ddoe.","It was fine yesterday.","braf never mutates."],
+ ["Oedd hi'n oer neithiwr? Nac oedd.","Was it cold last night? No.",""],
+ ["Doedd y bwyd ddim yn {dd}a.","The food wasn't good.",""],
+ ["Roedd pen tost gyda fi.","I had a headache.",""],
+ ["Roedd annwyd arni hi.","She had a cold.",""],
+ ["Roedd clust {d}ost gyda fe.","He had earache.","clust is feminine, so tost → dost."],
+ ["Sut roedd y tywydd ddoe?","How was the weather yesterday?",""],
+ ["Doedd e ddim yn hapus achos roedd e'n hwyr.","He wasn't happy because he was late.",""]]],
+[14,"Ble ro'ch chi'n byw?",[
+ ["Dw i'n byw yn {Nh}regaron.","I live in Tregaron.",""],
+ ["Ro'n i'n byw ym {Mh}enarth pan o'n i'n {b}lentyn.","I lived in Penarth when I was a child.",""],
+ ["Ble ro't ti neithiwr?","Where were you last night? (informal)",""],
+ ["Ro'n i'n gwrando ar y radio am saith o'r {g}loch.","I was listening to the radio at seven o'clock.",""],
+ ["Ro'n i'n arfer gweithio mewn ffatri.","I used to work in a factory.","arfer is optional."],
+ ["O't ti'n hoffi cinio ysgol? Nac o'n.","Did you like school dinners? No.",""],
+ ["Ro'n ni'n gweithio yng {Ngh}aerfyrddin.","We used to work in Carmarthen.",""],
+ ["Do'n i ddim yn gwybod.","I didn't know.",""]]],
+[15,"Siarad wyneb yn wyneb",[
+ ["Dw i wedi ateb pob ebost.","I have answered every email.",""],
+ ["Wyt ti wedi cael brecwast? Ydw.","Have you had breakfast? Yes.",""],
+ ["Dw i ddim wedi bod yn Las Vegas.","I haven't been to Las Vegas.",""],
+ ["Mae hi wedi ymddeol.","She has retired.",""],
+ ["Wyt ti eisiau diod arall?","Do you want another drink? (informal)",""],
+ ["Anghofiais i {dd}od i apwyntiad ddoe.","I forgot to come to an appointment yesterday.",""],
+ ["'Dyn ni'n mynd ar {w}yliau ym mis Gorffennaf.","We're going on holiday in July.",""],
+ ["Oes copi gyda chi, os gwelwch chi'n {dd}a?","Have you got a copy, please?",""]]],
+[16,"Rhifau, Amser ac Arian",[
+ ["Faint o'r {g}loch yw hi?","What time is it?",""],
+ ["Mae hi'n chwarter i {b}ump.","It's quarter to five.",""],
+ ["Mae hi'n {b}um munud ar {h}ugain wedi dau.","It's twenty-five past two.",""],
+ ["Faint o'r {g}loch mae'r dosbarth yn dechrau? Saith o'r {g}loch.","What time does the class start? Seven o'clock.",""],
+ ["Codais i am hanner awr wedi chwech.","I got up at half past six.",""],
+ ["Es i i'r gwely am {dd}eg o'r {g}loch.","I went to bed at ten o'clock.",""],
+ ["Faint yw'r {g}acen? Dwy {b}unt.","How much is the cake? Two pounds.","cacen and punt are both feminine."],
+ ["Ydy'r bwyd yn {dd}rud? Nac ydy, ddim yn rhy {dd}rud.","Is the food expensive? No, not too expensive.",""]]],
+[17,"Bydd hi'n braf yfory",[
+ ["Bydd hi'n braf heno.","It will be fine tonight.",""],
+ ["{F}ydd hi'n bwrw eira ar yr Wyddfa? Bydd.","Will it be snowing on Snowdon? Yes.",""],
+ ["Sut bydd y tywydd yfory?","How will the weather be tomorrow?",""],
+ ["{F}ydd Bethan ddim yn {b}rysur heno.","Bethan won't be busy tonight.",""],
+ ["{F}ydd hi'n bwrw glaw ym {M}laenau Ffestiniog? Na {f}ydd.","Will it be raining in Blaenau Ffestiniog? No.",""],
+ ["Bydd e'n gallu darllen yr ebost yn y gwesty.","He will be able to read the email in the hotel.",""],
+ ["Bydda i yn y gwaith yfory.","I will be in work tomorrow.","No linking 'n: yn y means 'in the'."],
+ ["Pryd bydd e'n ôl?","When will he be back?",""]]],
+[18,"Bydda i'n mynd",[
+ ["Bydda i'n gweithio yr wythnos nesa.","I will be working next week.",""],
+ ["{F}yddi di'n siopa yfory? Na {f}ydda.","Will you be shopping tomorrow? No.",""],
+ ["Byddwn ni'n hedfan bore yfory.","We will be flying tomorrow morning.",""],
+ ["Pryd byddwch chi'n cyrraedd?","When will you be arriving?",""],
+ ["Beth {f}yddi di'n {w}neud heno?","What will you be doing tonight? (informal)",""],
+ ["Byddan nhw'n mynd i'r {f}archnad.","They will be going to the market.",""],
+ ["Os bydd hi'n braf yfory, bydda i'n mynd am {d}ro yn y parc.","If it's fine tomorrow, I'll go for a walk in the park.",""],
+ ["{F}ydda i ddim ar {g}ael dydd Llun.","I won't be available on Monday.",""]]]
+];
+
+var LINES={},IDS={};
+U.forEach(function(u){
+  IDS[u[0]]=[];
+  u[2].forEach(function(r,i){var id=u[0]+"-"+i;IDS[u[0]].push(id);LINES[id]={id:id,u:u[0],cy:r[0],en:r[1],note:r[2]};});
+});
+
+/* ---------- saving (same method as amser) ---------- */
+var KEY="ymarfer-v1";
+var PRAISE=["Da iawn","Cywir","Gwych","Ardderchog","Perffaith"];
+function blankState(){return {c:{},mode:false,best:0,rev:0};}
+function loadLocal(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);if(o&&o.c)return o;}}catch(e){}return null;}
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+var S=loadLocal()||blankState();
+var cloudDoc=null,pushT=null,pushing=false,dirty=false;
+function save(){S.rev=Date.now();saveLocal();pushSoon();}
+function pushSoon(){if(!cloudDoc)return;dirty=true;clearTimeout(pushT);pushT=setTimeout(push,1500);}
+function push(){
+  if(!cloudDoc||pushing||!dirty)return;
+  pushing=true;dirty=false;
+  cloudDoc.set({rev:S.rev,json:JSON.stringify(S)}).then(function(){pushing=false;if(dirty)pushSoon();},
+    function(e){pushing=false;if(!e||e.code!=="unavailable")cloudDoc=null;});
+}
+function right(id){return S.c[id]||0;}
+
+/* ---------- score: this visit's score lives in the tab; the best is kept with your progress ---------- */
+var SKEY="ymarfer-score",score=0;
+try{score=+sessionStorage.getItem(SKEY)||0;}catch(e){}
+function showScore(){
+  document.getElementById("score").textContent="Score: "+score+((S.best||0)>0?" · Best: "+S.best:"");
+}
+function addScore(n){
+  if(!n)return;
+  score+=n;
+  try{sessionStorage.setItem(SKEY,score);}catch(e){}
+  if(score>(S.best||0)){S.best=score;save();}
+  showScore();
+}
+showScore();
+
+/* ---------- helpers ---------- */
+var $=function(id){return document.getElementById(id);};
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");}
+function marked(s){return esc(s).replace(/\{([^}]*)\}/g,'<span class="mut">$1</span>');}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x;}return a;}
+/* Welsh letters: ch, dd, ff, ng, ll, ph, rh, th each count as one */
+function letters(w){return w.match(/ch|dd|ff|ng|ll|ph|rh|th|./gi)||[];}
+/* forgiving compare: case, apostrophes and accents don't matter */
+function norm(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[‘’ʼ`´']/g,"").trim().replace(/[.,!?;:]+$/,"");}
+function tokens(s){
+  return s.split(" ").map(function(t){
+    var m=t.match(/^(.*?)([.,?!:;]*)$/),core=m[1],plain=core.replace(/[{}]/g,"");
+    return {core:core,plain:plain,trail:m[2],word:/[A-Za-zÀ-ž]/.test(plain),mut:core.indexOf("{")>-1};
+  });
+}
+function wordCount(L){return tokens(L.cy).filter(function(t){return t.word;}).length;}
+/* Welsh letters, so ll or ch scores one, as in the alphabet (and the Help dashes) */
+function letterCount(w){return letters(w).filter(function(L){return /[A-Za-zÀ-ž]/.test(L);}).length;}
+function blanksFor(L){return Math.min(wordCount(L),1+right(L.id));}
+
+/* ---------- the units list ---------- */
+var box=$("units"),dets=[];
+U.forEach(function(u){
+  var d=document.createElement("details");
+  d.className="unit";d.setAttribute("data-u",u[0]);
+  d.innerHTML='<summary><span class="unit-pill" lang="cy">Uned '+u[0]+'</span><span class="unit-title" lang="cy">'+esc(u[1])
+    +'</span><span class="tally"></span><span class="chev">›</span></summary><div class="unit-body"></div>';
+  box.appendChild(d);dets.push(d);
+});
+function tallies(){
+  dets.forEach(function(d){
+    var ids=IDS[d.getAttribute("data-u")],k=ids.filter(function(id){return right(id)>0;}).length;
+    d.querySelector(".tally").textContent=k?k+"/"+ids.length:"";
+    d.querySelector(".tally").title=k+" of "+ids.length+" lines got right in practice";
+  });
+}
+tallies();
+
+/* ---------- random line: from Uned 1 up to the slider ---------- */
+var MAXU=U[U.length-1][0],UNITTITLE={};
+U.forEach(function(u){UNITTITLE[u[0]]=u[1];});
+$("span").textContent="Unedau 1–"+MAXU;
+var upto=$("upto"),uptoLabel=$("uptoLabel");
+upto.max=MAXU;
+upto.value=Math.min(MAXU,Math.max(1,S.upto||Math.round(MAXU/2)));
+function uptoText(){var n=+upto.value;uptoLabel.textContent=n===1?"Uned 1":"Unedau 1–"+n;}
+uptoText();
+upto.addEventListener("input",uptoText);
+upto.addEventListener("change",function(){S.upto=+upto.value;saveLocal();});
+
+/* ---------- the practice panel: one, moved into whichever unit is open ---------- */
+var panel=document.createElement("div");
+panel.className="panel";
+panel.innerHTML='<p class="from" id="from" hidden></p><p class="read" id="read" aria-live="polite"></p>'
+  +'<div class="reveal" id="reveal"><div class="reveal-in"><p class="fb" id="fb" aria-live="polite"></p><p class="eng" id="eng" aria-live="polite"></p><p class="nt" id="nt"></p></div></div>'
+  +'<div class="controls"><div class="left">'
+  +'<label class="switch"><input type="checkbox" id="mode" role="switch"><span class="track" aria-hidden="true"></span><span><span lang="cy">Ymarfer</span> <span class="en">· practice</span></span></label>'
+  +'<button class="quiet" id="next">Next line</button></div>'
+  +'<div class="right"><button class="quiet" id="help" hidden>Help</button><button class="go" id="check">Check</button></div></div>'
+  +'<p class="level" id="level" hidden></p>';
+document.body.appendChild(panel);panel.hidden=true;
+var fromEl=$("from"),read=$("read"),reveal=$("reveal"),fb=$("fb"),eng=$("eng"),nt=$("nt"),mode=$("mode"),
+    nextBtn=$("next"),help=$("help"),check=$("check"),level=$("level");
+mode.checked=!!S.mode;
+
+function openReveal(){reveal.classList.add("open");reveal.style.height=reveal.scrollHeight+"px";}
+function closeReveal(){
+  if(!reveal.classList.contains("open"))return;
+  if(reveal.style.height==="auto"){reveal.style.height=reveal.offsetHeight+"px";void reveal.offsetHeight;}
+  reveal.classList.remove("open");reveal.style.height="0px";
+}
+reveal.addEventListener("transitionend",function(e){
+  if(e.target!==reveal||e.propertyName!=="height")return;
+  if(reveal.classList.contains("open"))reveal.style.height="auto";
+  else{fb.textContent="";fb.className="fb";eng.textContent="";nt.textContent="";}
+});
+
+/* each unit deals its lines like a shuffled deck, never the same line twice running */
+var decks={},lastId=null,where=null;   /* where: a unit number, or "rand" */
+function deal(key,ids){
+  var d=decks[key];
+  if(!d||!d.length)d=decks[key]=shuffle(ids);
+  var id=d.pop();
+  if(id===lastId&&d.length){var o=d.pop();d.unshift(id);id=o;}
+  lastId=id;return LINES[id];
+}
+function draw(u){return deal(u,IDS[u]);}
+function drawRandom(){
+  var n=+upto.value,ids=[];
+  for(var u=1;u<=n;u++)if(IDS[u])ids=ids.concat(IDS[u]);
+  return deal("rand"+n,ids);
+}
+
+var cur=null,toks=[],order=[],blanks=[],checked=false,hints=null,helpUsed=false,praise=0;
+/* mutated words are hidden first, then the rest in random order */
+function pickOrder(){
+  var m=[],w=[];
+  toks.forEach(function(t,i){if(t.word)(t.mut?m:w).push(i);});
+  return shuffle(m).concat(shuffle(w));
+}
+function render(fresh){
+  toks=tokens(cur.cy);
+  if(fresh){order=pickOrder();checked=false;closeReveal();}
+  var on=mode.checked;
+  blanks=on?order.slice(0,blanksFor(cur)):[];
+  hints=null;helpUsed=false;
+  read.innerHTML='<span lang="cy">'+toks.map(function(t,i){
+    var w;
+    if(blanks.indexOf(i)<0)w=marked(t.core);
+    else w='<ruby class="slot" data-i="'+i+'"><input class="blank" data-i="'+i+'" style="width:'+(t.plain.length+1.6)+'ch" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" aria-label="Missing word"><rt hidden></rt></ruby>';
+    return w+esc(t.trail);
+  }).join(" ")+"</span>";
+  check.disabled=checked;
+  help.hidden=level.hidden=!on;
+  help.disabled=!on||checked;
+  nextBtn.classList.toggle("next",checked);
+  fromEl.hidden=where!=="rand";
+  if(where==="rand")fromEl.innerHTML='<span class="unit-pill" lang="cy" title="'+esc(UNITTITLE[cur.u])+'">Uned '+cur.u+"</span>";
+  levelLine();
+}
+function levelLine(){
+  var n=blanksFor(cur),total=wordCount(cur),r=right(cur.id);
+  level.textContent="This line: "+r+" right · "+n+" of "+total+(total===1?" word":" words")+" hidden"
+    +(n>=total?" · that's all of them":" · one more after the next right answer");
+}
+function focusFirst(){var f=read.querySelector(".blank");if(f){try{f.focus({preventScroll:true});}catch(e){}}}
+function nextLine(focus){cur=where==="rand"?drawRandom():draw(cur.u);render(true);if(focus&&mode.checked)focusFirst();}
+
+/* ---------- help: first press shows the English and a _ per letter; each press after reveals a letter ---------- */
+function drawHints(){
+  Object.keys(hints).forEach(function(i){
+    var hn=hints[i],rt=read.querySelector('.slot[data-i="'+i+'"] rt');
+    if(!rt)return;
+    rt.textContent=hn.letters.map(function(L,k){return hn.shown[k]||L==="'"?L:"_";}).join(" ");
+    rt.hidden=false;
+  });
+}
+function doHelp(){
+  if(!mode.checked||checked)return;
+  helpUsed=true;
+  if(!hints){
+    hints={};
+    blanks.forEach(function(i){hints[i]={letters:letters(toks[i].plain),shown:{}};});
+    fb.textContent="";fb.className="fb";eng.textContent=cur.en;nt.textContent="";openReveal();
+  }else{
+    var hidden=[];
+    Object.keys(hints).forEach(function(i){
+      var inp=read.querySelector('.blank[data-i="'+i+'"]');
+      if(!inp||inp.disabled)return;
+      hints[i].letters.forEach(function(L,k){if(L!=="'"&&!hints[i].shown[k])hidden.push([i,k]);});
+    });
+    if(hidden.length){var pick=hidden[Math.floor(Math.random()*hidden.length)];hints[pick[0]].shown[pick[1]]=true;}
+    if(hidden.length<=1)help.disabled=true;
+  }
+  drawHints();
+}
+
+/* ---------- checking ---------- */
+function doCheck(){
+  if(checked)return;
+  eng.textContent=cur.en;nt.textContent=cur.note||"";
+  checked=true;check.disabled=true;help.disabled=true;nextBtn.classList.add("next");
+  if(!mode.checked){
+    fb.textContent="";fb.className="fb";openReveal();
+    try{nextBtn.focus({preventScroll:true});}catch(e){}
+    return;
+  }
+  var inputs=read.querySelectorAll(".blank"),all=true,gained=0;
+  for(var k=0;k<inputs.length;k++){
+    var inp=inputs[k],want=toks[+inp.getAttribute("data-i")].plain,got=inp.value;
+    var slot=inp.closest(".slot"),rt=slot&&slot.querySelector("rt");
+    if(norm(got)===norm(want)){inp.value=want;inp.classList.add("ok");inp.disabled=true;if(rt)rt.remove();gained+=letterCount(want);}
+    else{
+      all=false;
+      var sp=document.createElement("span");
+      sp.innerHTML=(got.trim()?'<s class="tried">'+esc(got.trim())+"</s>":"")+'<span class="fixw">'+esc(want)+"</span>";
+      (slot||inp).replaceWith(sp);
+    }
+  }
+  if(!helpUsed)addScore(gained);
+  if(all&&helpUsed){
+    fb.textContent=PRAISE[praise++%PRAISE.length]+" · with help, so it doesn't count this time";
+    fb.className="fb ok";
+  }else if(all){
+    var more=blanksFor(cur)<wordCount(cur);
+    S.c[cur.id]=right(cur.id)+1;save();tallies();
+    fb.textContent=PRAISE[praise++%PRAISE.length]+(more?" · one more word hidden next time":"");
+    fb.className="fb ok";
+  }else{
+    fb.innerHTML='<span lang="cy">Bron</span> — nearly. The right '+(inputs.length===1?"word is":"words are")+" in red.";
+    fb.className="fb no";
+  }
+  levelLine();openReveal();
+  try{nextBtn.focus({preventScroll:true});}catch(e){}
+}
+
+/* ---------- opening a unit closes the others and brings the panel in ---------- */
+dets.forEach(function(d){
+  d.addEventListener("toggle",function(){
+    if(!d.open)return;
+    dets.forEach(function(o){if(o!==d&&o.open)o.open=false;});
+    d.querySelector(".unit-body").appendChild(panel);panel.hidden=false;
+    where=+d.getAttribute("data-u");cur=draw(where);render(true);
+    requestAnimationFrame(function(){
+      var s=d.querySelector("summary");
+      if(s.getBoundingClientRect().top<0)s.scrollIntoView({block:"start"});
+    });
+  });
+});
+
+/* ---------- controls ---------- */
+mode.addEventListener("change",function(){
+  S.mode=mode.checked;saveLocal();
+  if(!cur)return;
+  render(true);
+  if(mode.checked)focusFirst();
+});
+nextBtn.addEventListener("click",function(){nextLine(true);});
+$("randLine").addEventListener("click",function(){
+  dets.forEach(function(o){if(o.open)o.open=false;});
+  $("randBox").appendChild(panel);panel.hidden=false;
+  where="rand";cur=drawRandom();render(true);
+  if(mode.checked)focusFirst();
+});
+help.addEventListener("click",doHelp);
+check.addEventListener("click",doCheck);
+read.addEventListener("keydown",function(e){
+  if(e.key!=="Enter"||!e.target.classList.contains("blank"))return;
+  e.preventDefault();
+  var all=[].slice.call(read.querySelectorAll(".blank")),i=all.indexOf(e.target);
+  var empty=all.filter(function(x){return !x.value.trim();});
+  if(i<all.length-1&&empty.length)all[i+1].focus();else doCheck();
+});
+document.addEventListener("keydown",function(e){
+  if(e.key==="Enter"&&checked&&cur&&document.activeElement===document.body){e.preventDefault();nextLine(true);}
+});
+$("reset").addEventListener("click",function(){
+  if(confirm("Reset every line back to one hidden word, and clear your best score?")){var m=S.mode,up=S.upto;S=blankState();S.mode=m;S.upto=up;save();score=0;try{sessionStorage.removeItem(SKEY);}catch(e){}tallies();showScore();if(cur)render(true);}
+});
+
+/* When opened as a Claude artifact, also keep progress with the account so it survives a cleared browser. */
+(function(){
+  if(!window.claude||typeof window.claude.use!=="function")return;
+  Promise.all([window.claude.use("db"),window.claude.use("user")]).then(function(r){
+    var db=r[0],user=r[1];
+    if(!db||!user)return;
+    return user.id().then(function(uid){
+      if(!uid)return;
+      var ref=db.doc("data/users/"+uid+"/ymarfer");
+      return ref.get().then(function(snap){
+        cloudDoc=ref;
+        var d=snap.exists?snap.data():null,crev=d&&typeof d.rev==="number"?d.rev:0;
+        if(d&&typeof d.json==="string"&&crev>(S.rev||0)){
+          try{var c=JSON.parse(d.json);if(c&&c.c){S=c;mode.checked=!!S.mode;saveLocal();tallies();showScore();if(cur&&!checked)render(false);}}catch(e){}
+        }else if((S.rev||0)>crev){pushSoon();}
+      });
+    });
+  }).catch(function(){});
+})();
+
+})();
+</script>
+</body>
+</html>
